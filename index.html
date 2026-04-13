@@ -7,7 +7,13 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f1923">
-<title>Vitals &amp; Ventures — Healthcare Finance Simulation</title>
+<title>Vitals & Ventures — Healthcare Finance Simulation Game</title>
+<meta name="description" content="Run a community health clinic. Make real financial decisions about patient care, insurance reimbursement, and operating budgets. A free educational game teaching healthcare finance through simulation.">
+<meta name="keywords" content="healthcare finance game, medical business simulation, educational finance game, health economics, community health clinic simulation">
+<meta property="og:title" content="Vitals & Ventures — Healthcare Finance Simulation">
+<meta property="og:description" content="Can you balance mission and margin? Run a community health clinic and discover why healthcare finance is harder than it looks.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vitals-and-ventures.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -302,15 +308,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   .stat-tip{display:none!important}
 }
 </style>
-</head>
+</head><!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KMET0FZXL7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KMET0FZXL7');
+</script>
 <body>
 
 <!-- ============================================================
   SUPABASE CONFIG — paste your credentials here after setup
 ============================================================ -->
 <script>
-const SUPABASE_URL = 'https://beveheokifcqabdkzbzv.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldmVoZW9raWZjcWFiZGt6Ynp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5OTg4OTEsImV4cCI6MjA5MTU3NDg5MX0.uKqEYJGZRkGl_0c1jsJEcQ020aHIbKE3BB2-Rf4Yp8A';
+const SUPABASE_URL = '';
+const SUPABASE_KEY = '';
 const SUPABASE_READY = !!(SUPABASE_URL && SUPABASE_KEY);
 
 async function dbInsert(row) {
@@ -879,6 +893,7 @@ function startGame() {
     mb.className = "badge badge-solo";
   }
   showScreen("gameScreen");
+gtag('event', 'game_started', {difficulty: DIFFS[selDiff].name, mode: selMode});
   setupQuarter();
 }
 
@@ -1451,7 +1466,8 @@ async function endGame() {
     var ok = await dbInsert(entry);
     if (ok) showToast("Score posted to leaderboard!");
   }
-  showScreen("endScreen");
+gtag('event', 'game_completed', {score: composite, difficulty: DIFFS[G.diff].name, mode: selMode});  
+showScreen("endScreen");
 }
 
 function addLog(m) { G.log.unshift(m); }
