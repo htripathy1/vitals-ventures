@@ -1,2 +1,2 @@
 # vitals-ventures
-Helathcare finance game 
+Healthcare finance game 
