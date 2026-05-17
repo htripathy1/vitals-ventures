@@ -10,7 +10,7 @@
 <title>Vitals & Ventures — Healthcare Finance Simulation Game</title>
 <meta name="description" content="Run a community health clinic. Make real financial decisions about patient care, insurance reimbursement, and operating budgets. A free educational game teaching healthcare finance through simulation.">
 <meta name="keywords" content="healthcare finance game, medical business simulation, educational finance game, health economics, community health clinic simulation">
-<meta property="og:title" content="Vitals & Ventures — Healthcare Finance Simulation">
+<meta property="og:title" content="Vitals & Ventures - Healthcare Finance Simulation">
 <meta property="og:description" content="Can you balance mission and margin? Run a community health clinic and discover why healthcare finance is harder than it looks.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vitals-and-ventures.com">
@@ -38,8 +38,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .btn-out:hover{border-color:var(--mint);color:var(--mint)}
 .btn-sm{padding:.5rem 1.1rem;font-size:.82rem;border-radius:20px;min-height:40px}
 
-/* ── SCREEN 1: LANDING ── */
-.s1-wrap{min-height:100vh;background:radial-gradient(ellipse at 30% 20%,#183040 0%,var(--bg) 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem}
+/* SCREEN 1: LANDING */
+.s1-wrap{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem}
 .s1-inner{max-width:860px;width:100%;text-align:center}
 .s1-inner h1{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:800;background:linear-gradient(135deg,var(--mint),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.4rem}
 .s1-tagline{font-size:1.05rem;color:var(--dim);line-height:1.6;margin-bottom:.5rem}
@@ -59,8 +59,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 .s1-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
 
-/* ── SCREEN 2: SETUP ── */
-.s2-wrap{min-height:100vh;background:radial-gradient(ellipse at 70% 30%,#1a2a40 0%,var(--bg) 65%);padding:2rem}
+/* SCREEN 2: SETUP */
+.s2-wrap{min-height:100vh;background:var(--bg);padding:2rem}
 .s2-inner{max-width:720px;margin:0 auto}
 .s2-inner h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--mint);margin-bottom:.3rem}
 .s2-sub{font-size:.85rem;color:var(--dim);margin-bottom:1.8rem}
@@ -91,7 +91,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .warn-box{background:rgba(255,107,107,.08);border:1px solid var(--coral);border-radius:8px;padding:.7rem 1rem;font-size:.76rem;color:var(--coral);margin-top:.6rem}
 .s2-btns{display:flex;gap:.8rem;margin-top:2rem;flex-wrap:wrap}
 
-/* ── TUTORIAL ── */
+/* TUTORIAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem}
 .overlay.active{display:flex}
 .tut-box{background:var(--card);border-radius:var(--radius);padding:2rem;max-width:540px;width:100%;border:2px solid var(--mint);text-align:center;max-height:90vh;overflow-y:auto}
@@ -101,7 +101,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tut-step{font-size:.68rem;color:var(--mint);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.6px}
 .tut-nav{display:flex;gap:.5rem;justify-content:center;margin-top:1rem;flex-wrap:wrap}
 
-/* ── HEADLINE OVERLAY ── */
+/* HEADLINE OVERLAY */
 .headline-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:900;display:none;align-items:center;justify-content:center;padding:1rem}
 .headline-overlay.active{display:flex}
 .hl-card{background:var(--card);border-radius:var(--radius);padding:2rem;max-width:500px;width:100%;border:2px solid var(--gold);text-align:center}
@@ -114,14 +114,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .hl-concept .hc-badge{font-size:.65rem;text-transform:uppercase;letter-spacing:.6px;color:var(--gold);margin-bottom:.2rem;font-weight:700}
 .hl-concept .hc-body{font-size:.78rem;color:var(--dim);line-height:1.5}
 
-/* ── CONCEPT TOAST ── */
-.ctip{position:fixed;bottom:5rem;right:1rem;max-width:280px;background:var(--card);border:1px solid var(--mint);border-radius:var(--radius);padding:.9rem 1rem;font-size:.75rem;z-index:9998;transform:translateX(120%);transition:transform .35s;box-shadow:var(--shadow)}
-.ctip.show{transform:translateX(0)}
-.ctip .ct-badge{font-size:.62rem;text-transform:uppercase;letter-spacing:.5px;color:var(--mint);font-weight:700;margin-bottom:.25rem}
-.ctip .ct-title{font-weight:700;font-size:.82rem;margin-bottom:.25rem;color:var(--text)}
-.ctip .ct-body{color:var(--dim);line-height:1.45}
 
-/* ── GAME SCREEN ── */
+/* TOAST */
 .game-wrap{padding:1rem;max-width:1300px;margin:0 auto}
 .top-bar{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid #2a3f52;margin-bottom:.9rem;flex-wrap:wrap;gap:.5rem}
 .top-bar-left{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
@@ -197,7 +191,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .log::-webkit-scrollbar{width:3px}.log::-webkit-scrollbar-thumb{background:#3a4f62;border-radius:2px}
 .log-e{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
 
-/* ── END SCREEN ── */
+/* END SCREEN */
 .end-wrap{max-width:680px;margin:0 auto;text-align:center;padding:3rem 1.2rem}
 .end-wrap h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:.5rem}
 .end-clinic{font-size:.82rem;color:var(--dim);margin-bottom:1.2rem}
@@ -219,7 +213,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .lvlup{background:rgba(78,204,163,.07);border:1px solid var(--mint);border-radius:10px;padding:.9rem;font-size:.82rem;color:var(--mint);margin:1rem 0}
 .end-btns{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem}
 
-/* ── LEADERBOARD ── */
+/* LEADERBOARD */
 .lb-wrap{padding:2rem;max-width:780px;margin:0 auto}
 .lb-wrap h2{font-family:'Playfair Display',serif;color:var(--mint);margin-bottom:.3rem}
 .lb-sub{font-size:.78rem;color:var(--dim);margin-bottom:1rem}
@@ -236,7 +230,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .rank-gold{color:var(--gold);font-weight:700}.rank-silver{color:#C0C0C0;font-weight:700}.rank-bronze{color:#CD7F32;font-weight:700}
 .lb-msg{text-align:center;padding:2rem;color:var(--dim);font-size:.82rem}
 
-/* ── IMPACT ── */
+/* IMPACT */
 .impact-wrap{padding:2rem;max-width:900px;margin:0 auto}
 .impact-wrap h2{font-family:'Playfair Display',serif;color:var(--mint);margin-bottom:.3rem}
 .impact-sub{font-size:.78rem;color:var(--dim);margin-bottom:1.2rem}
@@ -254,14 +248,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .cfill{background:linear-gradient(90deg,var(--mint),var(--blue));border-radius:4px;height:6px;transition:width .5s}
 .export-row{margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap}
 
-/* ── FOOTER ── */
+/* FOOTER */
 .game-footer{background:#1a2430;color:#3a5060;text-align:center;padding:.8rem;font-size:.68rem;margin-top:2rem}
 
-/* ── TOAST ── */
+/* TOAST */
 .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card);border:1px solid var(--mint);border-radius:10px;padding:.65rem 1.3rem;font-size:.8rem;color:var(--text);z-index:9999;transition:transform .3s;white-space:nowrap;max-width:90vw}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
-/* ── MOBILE ── */
+/* MOBILE */
 @media(max-width:700px){
   input,select,textarea{font-size:16px!important}
   .btn{padding:.85rem 1.6rem;font-size:.95rem;min-height:44px}
@@ -289,7 +283,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   .ig{grid-template-columns:1fr 1fr;gap:.6rem}
   .tut-nav{flex-direction:column}
   .tut-nav .btn{width:100%;text-align:center}
-  .ctip{max-width:calc(100vw - 2rem);right:.5rem}
   .payer-legend{display:none}
 }
 @media(max-width:400px){
@@ -319,9 +312,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </script>
 <body>
 
-<!-- ============================================================
-  SUPABASE CONFIG — paste your credentials here after setup
-============================================================ -->
+<!-- SUPABASE CONFIG-->
 <script>
 const SUPABASE_URL = 'https://beveheokifcqabdkzbzv.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldmVoZW9raWZjcWFiZGt6Ynp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5OTg4OTEsImV4cCI6MjA5MTU3NDg5MX0.uKqEYJGZRkGl_0c1jsJEcQ020aHIbKE3BB2-Rf4Yp8A';
@@ -356,64 +347,56 @@ async function dbStats() {
 }
 </script>
 
-<!-- ════════════════════════════════════════════════════════════
-     SCREEN 1 — LANDING (About the Game)
-════════════════════════════════════════════════════════════ -->
+<!--SCREEN 1 — LANDING (About the Game)-->
 <div class="screen active" id="screen1">
 <div class="s1-wrap">
 <div class="s1-inner">
-  <div class="s1-pill">🏥 Healthcare Finance Simulation · Free to Play</div>
+  <div class="s1-pill">Healthcare Finance Simulation</div>
   <h1>Vitals &amp; Ventures</h1>
   <p class="s1-tagline">You're the director of a community health clinic.<br>
-    Treat patients. Manage the budget. Balance <strong style="color:var(--mint)">mission</strong> and <strong style="color:var(--gold)">margin</strong>.<br>
-    Discover why healthcare finance is harder than it looks.
+    Treat patients. Manage your budget. Balance <strong style="color:var(--mint)">mission</strong> and <strong style="color:var(--gold)">margin</strong>.<br>
+    Discover why healthcare finance is harder than it might seem.
   </p>
 
   <div class="hiw-grid">
     <div class="hiw-card">
-      <div class="hc-icon">🩺</div>
       <div class="hc-title">Treat Patients</div>
-      <div class="hc-desc">Every quarter, patients arrive with different insurance statuses. Insured = profitable. Uninsured = full cost to you but maximum community impact. Same treatment, completely different economics.</div>
+      <div class="hc-desc">Every quarter, patients arrive with different insurance statuses. Insured = profitable. Uninsured = unprofitable but maximum community impact. Same treatment, different sustainability.</div>
     </div>
     <div class="hiw-card">
-      <div class="hc-icon">💰</div>
       <div class="hc-title">Manage the Budget</div>
-      <div class="hc-desc">Pay staff, handle events, make strategic investments. Cash hits zero = clinic closes. Every dollar you spend is a dollar you can't spend elsewhere — that's <em>opportunity cost</em>.</div>
+      <div class="hc-desc">Pay staff, handle events, make investments. When cash hits zero, the clinic closes. Every dollar you spend is a dollar you can't spend elsewhere (<em>opportunity cost</em>).</div>
     </div>
     <div class="hiw-card">
-      <div class="hc-icon">⚡</div>
       <div class="hc-title">Handle Curveballs</div>
-      <div class="hc-desc">Flu surges, equipment failures, Medicaid rate cuts, natural disasters. Real healthcare finance is unpredictable. Your <em>cash reserves</em> are your defense.</div>
+      <div class="hc-desc">Flu surges, equipment failures, Medicaid rate cuts, natural disasters. Healthcare finance is unpredictable. Your <em>cash reserve</em> is your protection.</div>
     </div>
     <div class="hiw-card">
-      <div class="hc-icon">⚖️</div>
       <div class="hc-title">Balance the Score</div>
-      <div class="hc-desc">Composite score = 40% Financial + 40% Community Health + 20% Reputation. Only maximizing one dimension fails. <em>Multi-objective optimization</em> is the lesson.</div>
+      <div class="hc-desc">Composite score = 40% Financials + 40% Community Health + 20% Reputation. Only maximizing one aspect leads to failure. <em>Multi-objective balance</em> is the goal.</div>
     </div>
   </div>
 
   <p style="font-size:.78rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.6px;text-align:left;margin-bottom:.6rem">Finance Concepts Built Into Every Decision</p>
   <div class="concepts-strip">
-    <div class="cstrip-item"><div class="ci-term">Payer Mix</div><div class="ci-def">The ratio of insured vs. Medicaid vs. uninsured patients — your biggest revenue lever</div></div>
-    <div class="cstrip-item"><div class="ci-term">Operating Margin</div><div class="ci-def">Revenue minus total costs per quarter. Negative = you're burning cash.</div></div>
-    <div class="cstrip-item"><div class="ci-term">Opportunity Cost</div><div class="ci-def">Choosing one thing means giving up another. Every hire = equipment you can't buy.</div></div>
+    <div class="cstrip-item"><div class="ci-term">Payer Mix</div><div class="ci-def">The ratio of insured vs. Medicaid vs. uninsured patients. This controls revenue.</div></div>
+    <div class="cstrip-item"><div class="ci-term">Operating Margin</div><div class="ci-def">Revenue minus total costs per quarter. Negative means cash is being burned through.</div></div>
+    <div class="cstrip-item"><div class="ci-term">Opportunity Cost</div><div class="ci-def">Choosing one thing means giving up another. Every hire is equipment you can't buy.</div></div>
     <div class="cstrip-item"><div class="ci-term">Cash Runway</div><div class="ci-def">How many quarters until you run out of cash at your current burn rate.</div></div>
-    <div class="cstrip-item"><div class="ci-term">Cross-Subsidy</div><div class="ci-def">Profits from insured patients fund care for uninsured ones. Balance is survival.</div></div>
-    <div class="cstrip-item"><div class="ci-term">Revenue Diversification</div><div class="ci-def">Grants, insurance, Medicaid — three streams. Lose one and the others must compensate.</div></div>
+    <div class="cstrip-item"><div class="ci-term">Cross-Subsidy</div><div class="ci-def">Profits from insured patients fund care for uninsured ones, driving balance</div></div>
+    <div class="cstrip-item"><div class="ci-term">Revenue Diversification</div><div class="ci-def">Grants, insurance, and Medicaid are three streams. Lose one and the others must compensate.</div></div>
   </div>
 
   <div class="s1-btns">
-    <button class="btn btn-gold" onclick="startTutorial()">📖 How to Play</button>
+    <button class="btn btn-gold" onclick="startTutorial()">How to Play</button>
     <button class="btn btn-mint" onclick="showScreen('screen2')">Let's Play →</button>
-    <button class="btn btn-out" onclick="gotoLB()">🏆 Leaderboard</button>
+    <button class="btn btn-out" onclick="gotoLB()">Leaderboard</button>
   </div>
 </div>
 </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════
-     SCREEN 2 — SETUP (Mode, Difficulty, Name)
-════════════════════════════════════════════════════════════ -->
+<!-- SCREEN 2 — SETUP (Mode, Difficulty, Name)-->
 <div class="screen" id="screen2">
 <div class="s2-wrap">
 <div class="s2-inner">
@@ -427,24 +410,22 @@ async function dbStats() {
 
   <div class="setup-section">
     <div class="setup-label">Clinic Name</div>
-    <input type="text" class="field-input" id="clinicNameInput" placeholder="e.g. Riverside Community Health" maxlength="38" autocomplete="off">
+    <input type="text" class="field-input" id="clinicNameInput" placeholder="e.g. M.D. Anderson" maxlength="38" autocomplete="off">
   </div>
 
   <div class="setup-section">
     <div class="setup-label">Play Mode</div>
     <div class="mode-grid">
       <div class="mode-card sel" id="mc-solo" onclick="selectMode('solo',this)">
-        <div class="mc-icon">🎮</div>
         <div class="mc-title">Solo Mode</div>
         <div class="mc-desc">Play privately. Scores saved on this device.</div>
       </div>
       <div class="mode-card" id="mc-friends" onclick="selectMode('friends',this)">
-        <div class="mc-icon">👥</div>
         <div class="mc-title">Friends Mode</div>
         <div class="mc-desc">Share a room code and compete on a live leaderboard.</div>
       </div>
     </div>
-    <div id="warnBox" class="warn-box" style="display:none">⚠️ Friends Mode needs Supabase configured. See setup guide, or play in Solo Mode.</div>
+    <div id="warnBox" class="warn-box" style="display:none">Friends Mode needs Supabase configured. See setup guide, or play in Solo Mode.</div>
   </div>
 
   <div id="roomSection" style="display:none" class="setup-section">
@@ -453,23 +434,23 @@ async function dbStats() {
       <input type="text" class="field-input" id="roomCodeInput" placeholder="XXXX" maxlength="6" style="letter-spacing:3px;font-weight:700;font-size:1.1rem" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')">
       <button class="btn btn-sm btn-out" onclick="genRoom()">Generate</button>
     </div>
-    <div class="room-hint">Same code = same leaderboard. Share with friends or type their code to join their room.</div>
+    <div class="room-hint">Same code, same leaderboard. Share with friends or type their code to join their room.</div>
   </div>
 
   <div class="setup-section">
     <div class="setup-label">Difficulty</div>
     <div class="diff-grid">
       <div class="diff-card sel" id="dc-0" onclick="setDiff(0,this)">
-        <div class="dc-label">🟢 Intern</div>
-        <div class="dc-sub">$80K start · 4 quarters · gentle events</div>
+        <div class="dc-label">Intern</div>
+        <div class="dc-sub">$80K start - 4 quarters - gentle events</div>
       </div>
       <div class="diff-card" id="dc-1" onclick="setDiff(1,this)">
-        <div class="dc-label">🟡 Resident</div>
-        <div class="dc-sub">$70K start · 6 quarters · standard events</div>
+        <div class="dc-label">Resident</div>
+        <div class="dc-sub">$70K start - 6 quarters - standard events</div>
       </div>
       <div class="diff-card" id="dc-2" onclick="setDiff(2,this)">
-        <div class="dc-label">🔴 Attending</div>
-        <div class="dc-sub">$60K start · 8 quarters · demanding events</div>
+        <div class="dc-label">Attending</div>
+        <div class="dc-sub">$60K start - 8 quarters - demanding events</div>
       </div>
     </div>
   </div>
@@ -482,19 +463,15 @@ async function dbStats() {
 </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════
-     TUTORIAL OVERLAY
-════════════════════════════════════════════════════════════ -->
+<!-- TUTORIAL OVERLAY-->
 <div class="overlay" id="tutOverlay">
 <div class="tut-box" id="tutBox"></div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════
-     HEADLINE OVERLAY (between quarters)
-════════════════════════════════════════════════════════════ -->
+<!-- HEADLINE OVERLAY (between quarters)-->
 <div class="headline-overlay" id="hlOverlay">
 <div class="hl-card">
-  <div class="hl-paper">📰 Community Health Tribune</div>
+  <div class="hl-paper">Community Health Tribune</div>
   <div class="hl-text" id="hlText"></div>
   <div class="hl-stats" id="hlStats"></div>
   <div class="hl-concept" id="hlConcept"></div>
@@ -502,14 +479,12 @@ async function dbStats() {
 </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════
-     GAME SCREEN
-════════════════════════════════════════════════════════════ -->
+<!-- GAME SCREEN-->
 <div class="screen" id="gameScreen">
 <div class="game-wrap">
   <div class="top-bar">
     <div class="top-bar-left">
-      <h2>🏥 Vitals &amp; Ventures</h2>
+      <h2>Vitals &amp; Ventures</h2>
       <div class="badge badge-purple" id="lvlBadge"></div>
       <div class="badge badge-gold" id="qBadge"></div>
       <div class="badge" id="modeBadge"></div>
@@ -528,21 +503,21 @@ async function dbStats() {
   <div class="board">
     <div>
       <div class="panel">
-        <div class="panel-title">🩺 Incoming Patients <span id="patientCount" style="font-size:.65rem;color:var(--dim);font-weight:400"></span></div>
+        <div class="panel-title">Incoming Patients <span id="patientCount" style="font-size:.65rem;color:var(--dim);font-weight:400"></span></div>
         <div id="patients"></div>
       </div>
       <div class="panel" style="margin-top:.8rem">
-        <div class="panel-title">⚡ Quarter Event</div>
+        <div class="panel-title">Quarter Event</div>
         <div id="event"></div>
       </div>
     </div>
     <div>
       <div class="panel">
-        <div class="panel-title">📋 Strategic Decision</div>
+        <div class="panel-title">Strategic Decision</div>
         <div id="decisions"></div>
       </div>
       <div class="panel" style="margin-top:.8rem">
-        <div class="panel-title">📊 Activity Log</div>
+        <div class="panel-title">Activity Log</div>
         <div class="log" id="log"></div>
       </div>
     </div>
@@ -550,9 +525,7 @@ async function dbStats() {
 </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════
-     END SCREEN
-════════════════════════════════════════════════════════════ -->
+<!-- END SCREEN-->
 <div class="screen" id="endScreen">
 <div class="end-wrap">
   <h2>Clinic Report Card</h2>
@@ -563,31 +536,29 @@ async function dbStats() {
     <div class="es-box"><div class="es-lbl">Reputation</div><div class="es-val" id="esRep" style="color:var(--gold)"></div></div>
   </div>
   <div class="composite-big">
-    <div class="cb-lbl">COMPOSITE SCORE · Financial 40% + Health 40% + Reputation 20%</div>
+    <div class="cb-lbl">COMPOSITE SCORE - Financial 40% + Health 40% + Reputation 20%</div>
     <div class="cb-val" id="esComp"></div>
   </div>
   <div class="grade-txt" id="esGrade"></div>
   <div id="lvlupMsg"></div>
   <div class="badges-row" id="achvBadges"></div>
   <div class="debrief-box">
-    <h4>💡 What Your Decisions Taught You</h4>
+    <h4>What Your Decisions Taught You</h4>
     <div id="debriefItems"></div>
   </div>
   <div class="end-btns">
     <button class="btn btn-mint" onclick="showScreen('screen2')">Play Again</button>
-    <button class="btn btn-out" onclick="gotoLB()">🏆 Leaderboard</button>
-    <button class="btn btn-out" onclick="showScreen('screen1')">🏠 Home</button>
+    <button class="btn btn-out" onclick="gotoLB()">Leaderboard</button>
+    <button class="btn btn-out" onclick="showScreen('screen1')">Home</button>
   </div>
 </div>
-<div class="game-footer">Vitals &amp; Ventures — Educational Healthcare Finance Simulation © 2026</div>
+<div class="game-footer">Vitals &amp; Ventures - Educational Healthcare Finance Simulation © 2026</div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════
-     LEADERBOARD
-════════════════════════════════════════════════════════════ -->
+<!-- LEADERBOARD-->
 <div class="screen" id="lbScreen">
 <div class="lb-wrap">
-  <h2>🏆 Leaderboard</h2>
+  <h2>Leaderboard</h2>
   <div class="lb-sub" id="lbSub">Top scores</div>
   <div class="lb-tabs">
     <button class="lb-tab active" id="lbt-global" onclick="switchLbTab('global',this)">Global</button>
@@ -605,42 +576,31 @@ async function dbStats() {
 </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════
-     IMPACT DASHBOARD
-════════════════════════════════════════════════════════════ -->
+<!-- IMPACT DASHBOARD-->
 <div class="screen" id="impactScreen">
 <div class="impact-wrap">
-  <h2>📊 Impact Dashboard</h2>
+  <h2>Impact Dashboard</h2>
   <div class="impact-sub">Educational reach and outcomes across all players.</div>
   <div class="ig" id="impactStats"><div style="color:var(--dim);grid-column:1/-1;text-align:center;padding:1rem">Loading…</div></div>
   <div class="i-table-wrap" style="margin-bottom:1rem"><h3>Score Distribution</h3><div id="scoreDist"></div></div>
   <div class="i-table-wrap" style="margin-bottom:1rem"><h3>Difficulty Breakdown</h3><div id="diffBreak"></div></div>
   <div class="i-table-wrap"><h3>Recent Sessions</h3><div id="recentSess"></div></div>
   <div class="export-row">
-    <button class="btn btn-sm btn-out" onclick="exportCSV()">📥 Export CSV</button>
+    <button class="btn btn-sm btn-out" onclick="exportCSV()">Export CSV</button>
     <button class="btn btn-sm btn-out" onclick="showScreen('screen1')">← Back</button>
   </div>
 </div>
 </div>
 
-<!-- Concept tip bubble -->
-<div class="ctip" id="ctip">
-  <div class="ct-badge" id="ctBadge"></div>
-  <div class="ct-title" id="ctTitle"></div>
-  <div class="ct-body" id="ctBody"></div>
-</div>
-
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- ════════════════════════════════════════════════════════════
-     MAIN SCRIPT
-════════════════════════════════════════════════════════════ -->
+<!-- MAIN SCRIPT-->
 <script>
 
 'use strict';
 
-// ── STATE ──
+// STATE
 var selMode = 'solo';
 var selDiff = 0;
 var playerName = '';
@@ -654,23 +614,22 @@ var evMods = {};
 var qRevenue = 0;
 var qCosts = 0;
 var lbTab = 'global';
-var ctipTimer = null;
 
-// ── DIFFICULTY ──
+// DIFFICULTY 
 var DIFFS = [
   {name:"Intern",   cash:80000, maxQ:4,  staffCost:1500, evChance:0.40, label:"Intern"},
   {name:"Resident", cash:70000, maxQ:6,  staffCost:2000, evChance:0.60, label:"Resident"},
   {name:"Attending",cash:60000, maxQ:8,  staffCost:2500, evChance:0.75, label:"Attending"},
 ];
 
-// ── FINANCE CONCEPTS (rotate each quarter) ──
+// FINANCE CONCEPTS (rotate each quarter) 
 var QCONCEPTS = [
   {term:"Payer Mix",
-   def:"The ratio of insured, Medicaid, and uninsured patients you treat. Over-reliance on any one payer creates financial fragility."},
+   def:"The ratio of insured, Medicaid, and uninsured patients you treat. Over-reliance on any one payer creates financial instability."},
   {term:"Operating Margin",
-   def:"Revenue minus costs. If you spend more than you earn this quarter, your margin is negative. Sustainable clinics maintain a positive average."},
+   def:"Revenue minus costs. If you spend more than you earn this quarter, your margin is negative. Sustainable clinics need a positive average."},
   {term:"Opportunity Cost",
-   def:"Every dollar spent on staff or equipment is unavailable for something else. Every decision is also a choice about what you give up."},
+   def:"Every dollar spent on staff or equipment is unavailable for something else. Every decision urges a choice about what you give up."},
   {term:"Cash Runway",
    def:"How many quarters you can operate before hitting zero cash. Track your burn rate: if costs exceed revenue consistently, the runway shortens fast."},
   {term:"Cross-Subsidy",
@@ -678,16 +637,16 @@ var QCONCEPTS = [
   {term:"Revenue Diversification",
    def:"Clinics with multiple revenue streams survive shocks better. Over-reliance on one source is concentration risk."},
   {term:"Fixed vs. Variable Costs",
-   def:"Staff salaries are fixed — they arrive every quarter whether you treat 1 patient or 20. Fixed costs set your minimum cash burn."},
+   def:"Staff salaries are fixed: they arrive every quarter whether you treat 1 patient or 100. Fixed costs set your minimum cash burn."},
   {term:"Risk Reserves",
-   def:"Cash held as a buffer against unexpected events. Emergencies will happen. Reserves are not idle money — they are your insurance policy."},
+   def:"Cash held as a buffer against unexpected events. Emergencies will happen, and reserves are your insurance policy."},
   {term:"Break-Even Point",
-   def:"The volume of insured patients needed each quarter to cover fixed staff costs. Below that threshold, you rely on grants or run a deficit."},
+   def:"The volume of insured patients needed each quarter to cover fixed staff costs. Below that threshold, you rely on grants or run in a deficit."},
   {term:"Mission vs. Margin",
-   def:"Pure profit = turn away all uninsured = high cash, zero community health. Pure mission = treat everyone = great outcomes, bankruptcy. Balance is the only path."},
+   def:"Pure profit means turning away all uninsured: high cash, zero community health. Pure mission means treating everyone: great health, bankruptcy. Balance is the only option."},
 ];
 
-// ── PATIENTS ──
+// PATIENTS
 var PATIENTS = [
   {name:"Maria G.",   cond:"Diabetes Management",     ins:"insured",   cost:600,  reimb:1400, hp:3},
   {name:"James T.",   cond:"Flu Symptoms",            ins:"insured",   cost:200,  reimb:500,  hp:1},
@@ -789,15 +748,15 @@ var DECISIONS = [
 // ── TUTORIAL ──
 var TUT = [
   {title:"Welcome to Vitals and Ventures",
-   body:"<p>You run a community health clinic. The goal is not just to make money — and not just to help everyone. It is both, simultaneously.</p><p>That tension is what real healthcare finance feels like every day.</p>"},
+   body:"<p>You run a community health clinic. The goal is not just to make money and not just to help everyone. It is both, simultaneously.</p><p>That tension is what real healthcare finance feels like every day.</p>"},
   {title:"Your Four Dashboard Metrics",
-   body:"<div class=\"tut-hi\">💰 <b>Cash Balance</b> — Hits zero and the clinic closes. This is your hard constraint.<br><br>❤️ <b>Community Health</b> — Rises when you treat patients, falls when you turn them away.<br><br>👥 <b>Staff</b> — Each staff member costs a fixed amount every quarter regardless of patient volume. That is a fixed cost.<br><br>⭐ <b>Reputation</b> — Affects grant eligibility and quality bonus payments.</div>"},
+   body:"<div class=\"tut-hi\"> <b>Cash Balance</b> - Hits zero and the clinic closes. This is your hard constraint.<br><br> <b>Community Health</b> - Rises when you treat patients, falls when you turn them away.<br><br>👥 <b>Staff</b> - Each staff member costs a fixed amount every quarter regardless of patient volume. That is a fixed cost.<br><br> <b>Reputation</b> - Affects grant eligibility and quality bonus payments.</div>"},
   {title:"The Insurance Tier System",
-   body:"<p>Same patient. Same treatment. Three completely different financial outcomes:</p><div class=\"tut-hi\">🟢 <b>Insured</b> — Reimbursement exceeds your cost. Treating this patient is profitable.<br><br>🔵 <b>Medicaid</b> — Reimbursement covers about 60% of cost. You take a modest loss but serve the community.<br><br>🔴 <b>Uninsured</b> — Zero reimbursement. Full cost to you. Maximum community impact, maximum financial strain.</div><p>This is not a game abstraction. U.S. community health centers navigate this every single day.</p>"},
+   body:"<p>Same patient, same treatment. Three completely different financial outcomes:</p><div class=\"tut-hi\"> <b>Insured</b> - Reimbursement exceeds your cost. Treating this patient is profitable.<br><br> <b>Medicaid</b> - Reimbursement covers about 60% of cost. You take a modest loss but serve the community.<br><br> <b>Uninsured</b> - Zero reimbursement. Full cost to you. Maximum community impact, maximum financial strain.</div><p>This is not a game abstraction. U.S. community health centers navigate this every single day.</p>"},
   {title:"Events, Decisions and Concepts",
-   body:"<p>Each quarter brings a <b>random event</b> — flu surge, grant, equipment failure, staff burnout — plus one <b>strategic decision</b>. Both require financial thinking, not just immediate reactions.</p><p>You will also see a <b>Finance Concept of the Quarter</b> before each round, and concept tips appear as you act. These connect your decisions to real financial vocabulary.</p>"},
+   body:"<p>Each quarter brings a <b>random event</b>: flu surge, grant, equipment failure, staff burnout, plus one <b>strategic decision</b>. Both require financial thinking, not just immediate reactions.</p><p>You will also see a <b>Finance Concept of the Quarter</b> before each round, and concept tips appear as you act. These connect your decisions to financial vocabulary.</p>"},
   {title:"The Composite Score",
-   body:"<div class=\"tut-hi\">📊 Composite = 40% Financial + 40% Community Health + 20% Reputation</div><p>This formula is the lesson of the game. Reject every uninsured patient? Community Health collapses. Treat everyone regardless of cost? You go bankrupt.</p><p>The only path to a high score is genuine balance. This is how every community health center in America must operate.</p>"},
+   body:"<div class=\"tut-hi\">Composite = 40% Financial + 40% Community Health + 20% Reputation</div><p>This formula is the lesson of the game. Reject every uninsured patient? Community Health falls. Treat everyone regardless of cost? You go bankrupt.</p><p>The only method to a high score is balance. This is how every community health center in America must operate.</p>"},
 ];
 var tutIdx = 0;
 
@@ -1065,7 +1024,7 @@ function renderEvent() {
       "</div>";
   } else {
     document.getElementById("event").innerHTML =
-      "<div style=\"color:var(--dim);font-size:.78rem;padding:.4rem\">No event this quarter. Enjoy the calm — it will not last.</div>";
+      "<div style=\"color:var(--dim);font-size:.78rem;padding:.4rem\">No event this quarter. Enjoy the calm; it will not last.</div>";
   }
 }
 
@@ -1121,10 +1080,10 @@ function treat(i) {
   // In-game concept tips
   if (p.ins === "uninsured") {
     showCtip("Cross-Subsidy", "Uncompensated Care",
-      "You absorbed the full $" + p.cost.toLocaleString() + " cost. Cross-subsidy theory: profitable insured patients fund this care. Without enough insured volume, this model becomes unsustainable.");
+      "You absorbed the full $" + p.cost.toLocaleString() + " cost. Cross-subsidy theory: profitable insured patients fund this care. Without enough insured volume, this becomes unsustainable.");
   } else if (p.ins === "medicaid" && net < 0) {
     showCtip("Below-Cost Reimbursement", "Medicaid Economics",
-      "Medicaid paid $" + r.toLocaleString() + " for care that cost $" + p.cost.toLocaleString() + ". That $" + Math.abs(net).toLocaleString() + " shortfall is why safety-net clinics need grant revenue to survive.");
+      "Medicaid paid $" + r.toLocaleString() + " for care that cost $" + p.cost.toLocaleString() + ". That $" + Math.abs(net).toLocaleString() + " shortfall is why borderline safety-net clinics need grant revenue to survive.");
   } else if (p.ins === "insured" && net > 0) {
     showCtip("Operating Margin", "Profitable Patient",
       "Net margin of +$" + net.toLocaleString() + " from this insured patient. This profit funds your uninsured care and keeps the clinic solvent.");
@@ -1142,7 +1101,7 @@ function reject(i) {
   addLog("Turned away " + p.name + " | Health: -" + p.hp + " | Reputation: -3");
   if (p.ins === "uninsured") {
     showCtip("Payer Mix Risk", "Why Rejection Hurts",
-      "Turning away uninsured patients saves cash short-term but costs " + p.hp + " health points and 3 reputation. Lower reputation reduces grant eligibility — making it harder to fund care later.");
+      "Turning away uninsured patients saves cash short-term but costs " + p.hp + " health points and 3 reputation. Lower reputation reduces grant eligibility, making it harder to fund care later.");
   }
   renderAll();
 }
@@ -1160,11 +1119,11 @@ function decide(i) {
       qRevenue += 12000;
       addLog("Federal grant awarded: +$12,000");
       showCtip("Revenue Diversification", "Grant Awarded",
-        "Grant revenue reduces dependence on patient reimbursement. Diversified revenue streams make clinics resilient to Medicaid cuts or insurance changes.");
+        "Grant revenue reduces dependence on patient reimbursement. Diversified revenue streams are what make clinics more resistant to Medicaid cuts or insurance changes.");
     } else {
       addLog("Federal grant application: denied");
       showCtip("Risk Management", "Grant Denied",
-        "Grants are uncertain revenue. This is why healthy clinics treat them as supplemental, not primary. Your core operating model must work without them.");
+        "Grants are uncertain revenue. This is why healthy clinics treat them as supplemental and not primary. Your main operating model must work without them.");
     }
   }
   if (o.cost < 0) {
@@ -1254,16 +1213,16 @@ function buildConceptInsight(term, margin) {
 
   if (term === "Payer Mix") {
     if (total === 0) {
-      return "No patients treated yet — payer mix undefined. Next quarter, the ratio of insured, Medicaid, and uninsured patients will directly shape your revenue and community health score.";
+      return "No patients treated yet: payer mix undefined. Next quarter, the ratio of insured, Medicaid, and uninsured patients will directly shape your revenue and community health score.";
     }
     var summary = "This quarter: " + G.insT + " insured, " + G.medT + " Medicaid, " + G.uninsT + " uninsured (" + total + " total). ";
     if (G.insT === 0) {
       return summary + "Zero insured patients means zero profitable revenue to offset Medicaid losses and uncompensated care. A payer mix with no commercial patients is financially unsustainable.";
     }
     if (G.uninsT === 0) {
-      return summary + "Zero uninsured patients kept cash high but suppressed community health. Clinics that serve only insured patients lose grant eligibility and community trust.";
+      return summary + "Zero uninsured patients kept cash high but inhibited community health. Clinics that serve only insured patients lose grant eligibility and community trust.";
     }
-    return summary + "A mixed payer base is more resilient. The profit from " + G.insT + " insured patient" + (G.insT !== 1 ? "s" : "") + " helps fund the " + G.uninsT + " uninsured case" + (G.uninsT !== 1 ? "s" : "") + " — that is the cross-subsidy model in action.";
+    return summary + "A mixed payer base is more resilient. The profit from " + G.insT + " insured patient" + (G.insT !== 1 ? "s" : "") + " helps fund the " + G.uninsT + " uninsured case" + (G.uninsT !== 1 ? "s" : "") + "; that is the cross-subsidy model in action.";
   }
 
   if (term === "Operating Margin") {
@@ -1271,7 +1230,7 @@ function buildConceptInsight(term, margin) {
     var cos = "$" + qCosts.toLocaleString();
     var base = "Q" + (G.quarter - 1) + " margin: revenue " + rev + " minus costs " + cos + " = <b>" + mStr + "</b>. ";
     if (margin > 5000)   return base + "A healthy surplus. You have a cushion to absorb a worse quarter ahead.";
-    if (margin >= 0)     return base + "Breakeven. You covered all costs, but there is no buffer if something goes wrong next quarter.";
+    if (margin >= 0)     return base + "A break-even. You covered all costs, but there is no buffer if something goes wrong next quarter.";
     if (margin > -5000)  return base + "A modest loss. Manageable short-term if cash reserves are strong, but unsustainable if this repeats.";
     return base + "A significant loss. Without a course correction, you will exhaust cash before the final quarter.";
   }
@@ -1279,27 +1238,27 @@ function buildConceptInsight(term, margin) {
   if (term === "Opportunity Cost") {
     var lastDec = G.decisions.length > 0 ? G.decisions[G.decisions.length - 1] : null;
     var decText = lastDec ? "You chose: \"" + lastDec + ".\" " : "";
-    return decText + "Every dollar committed to staff cost — $" + staffCost.toLocaleString() + " this quarter — was unavailable for equipment, grants, or patient care. " +
+    return decText + "Every dollar committed to staff cost, $" + staffCost.toLocaleString() + " this quarter, was unavailable for equipment, grants, or patient care. " +
       "In healthcare finance, the true cost of a decision includes both what you paid and what you gave up.";
   }
 
   if (term === "Cash Runway") {
     var base2 = "Current cash: <b>" + cashStr + "</b>. At this quarter cost rate of $" + qCosts.toLocaleString() + ", you have roughly <b>" + runway + " quarter" + (runway !== 1 ? "s" : "") + "</b> of runway. ";
     if (runway <= 1) return base2 + "Critical. One more bad quarter closes the clinic. Increase revenue or cut costs immediately.";
-    if (runway <= 3) return base2 + "Tight. A single equipment failure or Medicaid cut could cut that runway in half.";
-    return base2 + "Solid position. Runway above 3 quarters means you can absorb disruptions without making desperate decisions.";
+    if (runway <= 3) return base2 + "Tight. A single equipment failure or Medicaid cut could cut the runway in half.";
+    return base2 + "Solid position. Runway above 3 quarters means you can tank disruptions without making desperate decisions.";
   }
 
   if (term === "Cross-Subsidy") {
     var uninsStr = G.uninsT + " uninsured patient" + (G.uninsT !== 1 ? "s" : "");
     if (G.uninsT === 0) {
-      return "No uninsured patients treated this game. Cross-subsidization only works if you are actually delivering subsidized care — otherwise the insured profit is just profit with no community benefit.";
+      return "No uninsured patients treated this game. Cross-subsidization only works if you are actually delivering subsidized care. Otherwise, the insured profit is just profit with no community benefit.";
     }
     if (G.insT === 0) {
       return "You treated " + uninsStr + " but zero insured patients. There is nothing to cross-subsidize with. Safety-net clinics must generate profitable revenue somewhere to fund charitable care.";
     }
     return "Profits from " + G.insT + " insured patient" + (G.insT !== 1 ? "s" : "") + " are helping offset the cost of serving " + uninsStr + ". " +
-      "This cross-subsidy model is how every community health center in the country stays open — balance in the payer mix is not optional, it is existential.";
+      "This cross-subsidy model is how every community health center in the country stays open. Balance in the payer mix is not optional, it is essential.";
   }
 
   if (term === "Revenue Diversification") {
@@ -1308,24 +1267,24 @@ function buildConceptInsight(term, margin) {
     if (G.medT > 0)  sources.push("Medicaid payments");
     if (G.uninsT > 0) sources.push("grant-eligible uninsured care");
     var sourceStr = sources.length > 0 ? sources.join(", ") : "no active revenue streams yet";
-    if (sources.length >= 3) return "Active revenue sources: " + sourceStr + ". Three streams is strong — losing one will not collapse your finances.";
-    if (sources.length === 2) return "Active revenue sources: " + sourceStr + ". Two streams is acceptable but fragile. A Medicaid rate cut alone could flip your margin negative.";
+    if (sources.length >= 3) return "Active revenue sources: " + sourceStr + ". Three streams is strong; losing one will not collapse your finances.";
+    if (sources.length === 2) return "Active revenue sources: " + sourceStr + ". Two streams is acceptable but fragile. A Medicaid rate cut alone could make your margin negative.";
     return "Active revenue sources: " + sourceStr + ". Dangerous concentration. A single policy change could eliminate most of your income overnight.";
   }
 
   if (term === "Fixed vs. Variable Costs") {
     var fixedPct = qCosts > 0 ? Math.round(staffCost / qCosts * 100) : 0;
     var base3 = "Fixed staff cost: $" + staffCost.toLocaleString() + " (" + fixedPct + "% of total costs of $" + qCosts.toLocaleString() + "). ";
-    base3 += "Fixed costs arrive every quarter whether you treat 2 patients or 20 — they do not scale with volume. ";
+    base3 += "Fixed costs arrive every quarter whether you treat 2 patients or 20. They do not scale with volume. ";
     if (fixedPct > 70) return base3 + "Your cost base is heavily fixed. In a low-volume quarter that is a serious vulnerability.";
-    return base3 + "Your fixed-to-variable ratio is reasonable. The key insight: fixed costs set your minimum cash burn no matter how few patients you see.";
+    return base3 + "Your fixed-to-variable ratio is reasonable. Fixed costs set your minimum cash burn no matter how few patients you see.";
   }
 
   if (term === "Risk Reserves") {
     var evText = evName ? "This quarter brought \"" + evName + "\" — an unplanned disruption. " : "No event this quarter, but disruptions are always coming. ";
     var base4 = evText + "Current reserves: <b>" + cashStr + "</b> — roughly " + runway + " quarter" + (runway !== 1 ? "s" : "") + " of operating buffer. ";
     if (runway < 2) return base4 + "Dangerously thin. Healthcare organizations should hold 2-3 quarters of operating expenses in reserve at minimum.";
-    if (runway < 4) return base4 + "Adequate but not comfortable. One major event could cut it in half.";
+    if (runway < 4) return base4 + "Decent but not comfortable. One major event could cut it in half.";
     return base4 + "Healthy reserve position. You can absorb a shock without being forced into desperate decisions.";
   }
 
@@ -1344,20 +1303,20 @@ function buildConceptInsight(term, margin) {
     var composite = Math.round(finScore * 0.4 + G.health * 0.4 + G.reputation * 0.2);
     var assessment;
     if (composite >= 70) {
-      assessment = "Both mission and margin are in balance. Keep it up.";
+      assessment = "Both mission (community health) and margin (expenses) are in balance. Keep it up.";
     } else if (G.cash > 30000 && G.health < 40) {
-      assessment = "Strong cash but weak community health. You are optimizing for margin at the expense of mission — the composite score reflects that trade-off.";
+      assessment = "Strong cash but weak community health. You are optimizing for margin at the expense of mission, and the composite score reflects that trade-off.";
     } else if (G.cash < 15000 && G.health > 70) {
-      assessment = "Strong health outcomes but thin cash. Excellent mission, fragile margin. One bad event could close the clinic before the final quarter.";
+      assessment = "Strong health outcomes but thin cash. Excellent mission, but fragile margin. One bad event could close the clinic before the final quarter.";
     } else {
-      assessment = "Both dimensions need attention. The goal is alignment, not choosing one over the other.";
+      assessment = "Both aspects need attention. The goal is alignment, not choosing one over the other.";
     }
     return "Mid-game check — Financial: " + finScore + "/100 | Health: " + G.health + "/100 | Reputation: " + G.reputation + "/100 | Estimated composite: <b>~" + composite + "/100</b>. " + assessment;
   }
 
   // Fallback
   return "Q" + (G.quarter - 1) + " margin: <b>" + mStr + "</b>. " +
-    (margin >= 0 ? "Revenue covered all costs this quarter." : "Costs exceeded revenue — monitor your cash runway.");
+    (margin >= 0 ? "Revenue covered all costs this quarter." : "Costs exceeded revenue; monitor your cash runway.");
 }
 
 function closeHeadline() {
@@ -1379,10 +1338,10 @@ async function endGame() {
   document.getElementById("esComp").textContent    = composite + "/100";
 
   var grade;
-  if (composite >= 80) grade = "Outstanding. You demonstrated that mission and margin can coexist — the hallmark of a well-run community health organization.";
-  else if (composite >= 65) grade = "Good management. You kept the clinic viable while serving the community. There is room to optimize the balance further.";
-  else if (composite >= 45) grade = "Struggled to find balance. You leaned too far toward one objective. In healthcare finance, neither dimension can be ignored.";
-  else grade = "The clinic failed its dual mission. The lesson: you cannot optimize one dimension at the expense of all others and survive long-term.";
+  if (composite >= 80) grade = "Outstanding. You demonstrated that mission and margin can coexist, which isessential to community health organization.";
+  else if (composite >= 65) grade = "Good management. You kept the clinic viable while serving the community. However, here is room to optimize the balance further.";
+  else if (composite >= 45) grade = "Struggled to find balance. You leaned too far toward one objective. In healthcare finance, neither aspect can be ignored.";
+  else grade = "The clinic failed its dual mission. You cannot optimize one aspect at the expense of all others and survive long-term.";
   document.getElementById("esGrade").textContent = grade;
 
   // Achievement badges
@@ -1409,33 +1368,33 @@ async function endGame() {
   if (G.uninsT === 0 && G.rejected > 0) {
     items.push({
       concept:"Payer Mix Risk",
-      text:"You treated zero uninsured patients. While this maximized short-term cash, it suppressed community health and reduced grant eligibility. Clinics that over-index on commercial payers face existential risk when payer mix shifts."
+      text:"You treated zero uninsured patients. While this maximized short-term cash, it suppressed community health and reduced grant eligibility. Clinics that over-extend on commercial payers face serious risk when the payer mix shifts."
     });
   } else if (uninsRate > 55) {
     items.push({
       concept:"Cross-Subsidy Economics",
-      text:"You treated " + G.uninsT + " uninsured patients (" + uninsRate + "% of your mix). Admirable — but financially unsustainable unless insured revenue covers the losses. The cross-subsidy only works if both sides are managed."
+      text:"You treated " + G.uninsT + " uninsured patients (" + uninsRate + "% of your mix). Admirable but financially unsustainable unless the insured revenue covers the losses. The cross-subsidy only works if both sides are managed."
     });
   }
 
   if (G.cash < 8000) {
     items.push({
       concept:"Cash Runway and Reserves",
-      text:"You ended with $" + G.cash.toLocaleString() + " — dangerously thin. One adverse event would have closed the clinic. Healthcare organizations maintain 60-90 days of operating expenses as a minimum reserve floor."
+      text:"You ended with $" + G.cash.toLocaleString() + ", which is dangerously thin. One bad event would have closed the clinic. Healthcare organizations have to maintain 60-90 days of operating expenses as a minimum reserve floor."
     });
   }
 
   if (G.rejected > G.treated) {
     items.push({
       concept:"Capacity vs. Access",
-      text:"You rejected more patients (" + G.rejected + ") than you treated (" + G.treated + "). Insufficient staffing or cash forced this. Staffing decisions are financial strategy decisions — they set your maximum service capacity."
+      text:"You rejected more patients (" + G.rejected + ") than you treated (" + G.treated + "). Insufficient staffing or cash forced this. Staffing is financial strategy, as it sets your maximum service capacity."
     });
   }
 
   if (items.length === 0) {
     items.push({
       concept:"Balanced Multi-Objective Management",
-      text:"You maintained genuine balance — treating " + G.treated + " patients over " + G.maxQ + " quarters while managing cash, health outcomes, and reputation simultaneously. This is the core skill of healthcare finance management."
+      text:"You maintained balance, treating " + G.treated + " patients over " + G.maxQ + " quarters while managing cash, health outcomes, and reputation at the same time. This is the primary skill of healthcare financial management."
     });
   }
 
@@ -1519,9 +1478,9 @@ async function loadLB() {
 }
 
 function renderLB(rows) {
-  document.getElementById("lbSub").textContent = rows.length + " score" + (rows.length !== 1 ? "s" : "") + " — " + lbTab;
+  document.getElementById("lbSub").textContent = rows.length + " score" + (rows.length !== 1 ? "s" : "") + " - " + lbTab;
   if (!rows.length) {
-    document.getElementById("lbContent").innerHTML = "<div class=\"lb-msg\">No scores yet — play a game first!</div>";
+    document.getElementById("lbContent").innerHTML = "<div class=\"lb-msg\">No scores yet, play a game first!</div>";
     return;
   }
   var html = "<table class=\"lb-table\"><thead><tr><th>#</th><th>Score</th><th>Player</th><th>Clinic</th><th>Level</th><th>Treated</th><th>Date</th></tr></thead><tbody>";
@@ -1613,15 +1572,9 @@ function exportCSV() {
   a.click();
 }
 
-// ── CONCEPT TIP BUBBLE ──
+// ── CONCEPT TIP BUBBLE (disabled) ──
 function showCtip(badge, title, body) {
-  document.getElementById("ctBadge").textContent = badge;
-  document.getElementById("ctTitle").textContent = title;
-  document.getElementById("ctBody").textContent  = body;
-  var el = document.getElementById("ctip");
-  el.classList.add("show");
-  if (ctipTimer) clearTimeout(ctipTimer);
-  ctipTimer = setTimeout(function(){ el.classList.remove("show"); }, 5500);
+  // tip bubble removed
 }
 
 // ── TOAST ──
