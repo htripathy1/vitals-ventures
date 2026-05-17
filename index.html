@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f1923">
-<title>Vitals & Ventures — Healthcare Finance Simulation Game</title>
+<title>Vitals & Ventures - Healthcare Finance Simulation Game</title>
 <meta name="description" content="Run a community health clinic. Make real financial decisions about patient care, insurance reimbursement, and operating budgets. A free educational game teaching healthcare finance through simulation.">
 <meta name="keywords" content="healthcare finance game, medical business simulation, educational finance game, health economics, community health clinic simulation">
 <meta property="og:title" content="Vitals & Ventures - Healthcare Finance Simulation">
@@ -41,7 +41,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 /* SCREEN 1: LANDING */
 .s1-wrap{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem}
 .s1-inner{max-width:860px;width:100%;text-align:center}
-.s1-inner h1{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:800;background:linear-gradient(135deg,var(--mint),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.4rem}
+.s1-inner h1{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:800;color:#A8DECE;text-shadow:0 0 40px rgba(78,204,163,.3),0 0 80px rgba(78,204,163,.1);margin-bottom:.4rem}
 .s1-tagline{font-size:1.05rem;color:var(--dim);line-height:1.6;margin-bottom:.5rem}
 .s1-pill{display:inline-block;background:rgba(78,204,163,.12);border:1px solid rgba(78,204,163,.3);border-radius:30px;padding:.35rem 1rem;font-size:.75rem;color:var(--mint);margin-bottom:2rem;font-weight:600;letter-spacing:.5px}
 
@@ -57,7 +57,26 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .cstrip-item .ci-term{font-weight:700;font-size:.76rem;color:var(--gold);margin-bottom:.2rem}
 .cstrip-item .ci-def{font-size:.67rem;color:var(--dim);line-height:1.4}
 
-.s1-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+.s1-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin:.8rem 0 1.2rem}
+
+/* COMPACT LAYOUT for shorter screens (Option B) */
+@media(max-height:800px){
+  .s1-pill{margin-bottom:1rem}
+  .s1-inner h1{font-size:2.4rem}
+  .s1-tagline{font-size:.92rem;margin-bottom:.3rem}
+  .s1-btns{margin:.6rem 0 1rem}
+  .hiw-grid{gap:.7rem;margin-bottom:1.2rem}
+  .hiw-card{padding:.85rem}
+  .concepts-strip{gap:.45rem;margin-bottom:1.2rem}
+  .cstrip-item{padding:.55rem}
+}
+@media(max-height:680px){
+  .s1-inner h1{font-size:2rem}
+  .s1-tagline{font-size:.85rem}
+  .hiw-grid{margin-bottom:.8rem}
+  .hiw-card .hc-desc{font-size:.68rem}
+  .concepts-strip{margin-bottom:.8rem}
+}
 
 /* SCREEN 2: SETUP */
 .s2-wrap{min-height:100vh;background:var(--bg);padding:2rem}
@@ -358,6 +377,12 @@ async function dbStats() {
     Discover why healthcare finance is harder than it might seem.
   </p>
 
+  <div class="s1-btns">
+    <button class="btn btn-gold" onclick="startTutorial()">How to Play</button>
+    <button class="btn btn-mint" onclick="showScreen('screen2')">Let's Play</button>
+    <button class="btn btn-out" onclick="gotoLB()">Leaderboard</button>
+  </div>
+
   <div class="hiw-grid">
     <div class="hiw-card">
       <div class="hc-title">Treat Patients</div>
@@ -387,11 +412,6 @@ async function dbStats() {
     <div class="cstrip-item"><div class="ci-term">Revenue Diversification</div><div class="ci-def">Grants, insurance, and Medicaid are three streams. Lose one and the others must compensate.</div></div>
   </div>
 
-  <div class="s1-btns">
-    <button class="btn btn-gold" onclick="startTutorial()">How to Play</button>
-    <button class="btn btn-mint" onclick="showScreen('screen2')">Let's Play →</button>
-    <button class="btn btn-out" onclick="gotoLB()">Leaderboard</button>
-  </div>
 </div>
 </div>
 </div>
@@ -1197,9 +1217,9 @@ function buildHeadline() {
     return "\"" + clinicName + " Posts Positive Margin While Serving " + total + " Patients\"";
   }
   if (margin < -3000) {
-    return "\"" + clinicName + " Reports Operating Loss of $" + Math.abs(margin).toLocaleString() + " in Quarter " + (G.quarter - 1) + "\"";
+    return "\"" + clinicName + " Reports Operating Loss of $" + Math.abs(margin).toLocaleString() + " in Quarter " + G.quarter + "\"";
   }
-  return "\"" + clinicName + " Completes Quarter " + (G.quarter - 1) + ": Health " + G.health + "/100, Cash $" + G.cash.toLocaleString() + "\"";
+  return "\"" + clinicName + " Completes Quarter " + G.quarter + ": Health " + G.health + "/100, Cash $" + G.cash.toLocaleString() + "\"";
 }
 
 function buildConceptInsight(term, margin) {
@@ -1228,7 +1248,7 @@ function buildConceptInsight(term, margin) {
   if (term === "Operating Margin") {
     var rev = "$" + qRevenue.toLocaleString();
     var cos = "$" + qCosts.toLocaleString();
-    var base = "Q" + (G.quarter - 1) + " margin: revenue " + rev + " minus costs " + cos + " = <b>" + mStr + "</b>. ";
+    var base = "Q" + G.quarter + " margin: revenue " + rev + " minus costs " + cos + " = <b>" + mStr + "</b>. ";
     if (margin > 5000)   return base + "A healthy surplus. You have a cushion to absorb a worse quarter ahead.";
     if (margin >= 0)     return base + "A break-even. You covered all costs, but there is no buffer if something goes wrong next quarter.";
     if (margin > -5000)  return base + "A modest loss. Manageable short-term if cash reserves are strong, but unsustainable if this repeats.";
@@ -1315,7 +1335,7 @@ function buildConceptInsight(term, margin) {
   }
 
   // Fallback
-  return "Q" + (G.quarter - 1) + " margin: <b>" + mStr + "</b>. " +
+  return "Q" + G.quarter + " margin: <b>" + mStr + "</b>. " +
     (margin >= 0 ? "Revenue covered all costs this quarter." : "Costs exceeded revenue; monitor your cash runway.");
 }
 
