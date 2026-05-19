@@ -242,6 +242,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .lb-filter{display:flex;gap:.5rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
 .lb-filter input{background:var(--card2);border:1.5px solid #2a3f52;border-radius:8px;padding:.38rem .8rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.8rem;outline:none;width:140px}
 .lb-filter input:focus{border-color:var(--mint)}
+.lb-section{margin-bottom:1.8rem}
+.lb-diff-header{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:1px solid #2a3f52}
 .lb-table{width:100%;border-collapse:collapse;font-size:.77rem}
 .lb-table th{background:var(--card2);padding:.5rem .45rem;text-align:left;color:var(--mint);font-size:.65rem;text-transform:uppercase;letter-spacing:.5px}
 .lb-table td{padding:.42rem .45rem;border-bottom:1px solid #2a3f52;color:var(--text)}
@@ -351,7 +353,7 @@ async function dbInsert(row) {
 async function dbQuery(roomFilter) {
   if (!SUPABASE_READY) return [];
   try {
-    let url = SUPABASE_URL + '/rest/v1/vv_scores?select=*&order=score.desc&limit=100';
+    let url = SUPABASE_URL + '/rest/v1/vv_scores?select=*&order=score.desc&limit=300';
     if (roomFilter) url += '&room_code=eq.' + roomFilter;
     const r = await fetch(url, {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
     return r.ok ? await r.json() : [];
@@ -438,7 +440,7 @@ async function dbStats() {
     <div class="mode-grid">
       <div class="mode-card sel" id="mc-solo" onclick="selectMode('solo',this)">
         <div class="mc-title">Solo Mode</div>
-        <div class="mc-desc">Play privately. Scores saved on the global leaderboard.</div>
+        <div class="mc-desc">Play privately. Scores saved on this device.</div>
       </div>
       <div class="mode-card" id="mc-friends" onclick="selectMode('friends',this)">
         <div class="mc-title">Friends Mode</div>
@@ -770,7 +772,7 @@ var TUT = [
   {title:"Welcome to Vitals and Ventures",
    body:"<p>You run a community health clinic. The goal is not just to make money and not just to help everyone. It is both, simultaneously.</p><p>That tension is what real healthcare finance feels like every day.</p>"},
   {title:"Your Four Dashboard Metrics",
-   body:"<div class=\"tut-hi\"> <b>Cash Balance</b> - Hits zero and the clinic closes. This is your hard constraint.<br><br> <b>Community Health</b> - Rises when you treat patients, falls when you turn them away.<br><br>  <b>Staff</b> - Each staff member costs a fixed amount every quarter regardless of patient volume. That is a fixed cost.<br><br> <b>Reputation</b> - Affects grant eligibility and quality bonus payments.</div>"},
+   body:"<div class=\"tut-hi\"> <b>Cash Balance</b> - Hits zero and the clinic closes. This is your hard constraint.<br><br> <b>Community Health</b> - Rises when you treat patients, falls when you turn them away.<br><br>👥 <b>Staff</b> - Each staff member costs a fixed amount every quarter regardless of patient volume. That is a fixed cost.<br><br> <b>Reputation</b> - Affects grant eligibility and quality bonus payments.</div>"},
   {title:"The Insurance Tier System",
    body:"<p>Same patient, same treatment. Three completely different financial outcomes:</p><div class=\"tut-hi\"> <b>Insured</b> - Reimbursement exceeds your cost. Treating this patient is profitable.<br><br> <b>Medicaid</b> - Reimbursement covers about 60% of cost. You take a modest loss but serve the community.<br><br> <b>Uninsured</b> - Zero reimbursement. Full cost to you. Maximum community impact, maximum financial strain.</div><p>This is not a game abstraction. U.S. community health centers navigate this every single day.</p>"},
   {title:"Events, Decisions and Concepts",
@@ -1441,9 +1443,9 @@ async function endGame() {
     created_at:        new Date().toISOString()
   };
   saveLocal(entry);
-  if (SUPABASE_READY) {
+  if (selMode === "friends" && SUPABASE_READY) {
     var ok = await dbInsert(entry);
-    if (ok) showToast(selMode === "friends" ? "Score posted to leaderboard!" : "Score saved to global leaderboard!");
+    if (ok) showToast("Score posted to leaderboard!");
   }
 gtag('event', 'game_completed', {score: composite, difficulty: DIFFS[G.diff].name, mode: selMode});  
 showScreen("endScreen");
@@ -1498,26 +1500,60 @@ async function loadLB() {
 }
 
 function renderLB(rows) {
-  document.getElementById("lbSub").textContent = rows.length + " score" + (rows.length !== 1 ? "s" : "") + " - " + lbTab;
+  var difficulties = [
+    { key: "Intern",    label: "🟢 Intern",    color: "var(--mint)" },
+    { key: "Resident",  label: "🟡 Resident",  color: "var(--gold)" },
+    { key: "Attending", label: "🔴 Attending", color: "var(--coral)" }
+  ];
+
   if (!rows.length) {
+    document.getElementById("lbSub").textContent = "No scores yet — play a game first!";
     document.getElementById("lbContent").innerHTML = "<div class=\"lb-msg\">No scores yet, play a game first!</div>";
     return;
   }
-  var html = "<table class=\"lb-table\"><thead><tr><th>#</th><th>Score</th><th>Player</th><th>Clinic</th><th>Level</th><th>Treated</th><th>Date</th></tr></thead><tbody>";
-  rows.forEach(function(s, i) {
-    var rc2 = i === 0 ? "rank-gold" : i === 1 ? "rank-silver" : i === 2 ? "rank-bronze" : "";
-    var dt = s.created_at ? new Date(s.created_at).toLocaleDateString() : (s.date || "—");
-    html += "<tr>" +
-      "<td class=\"" + rc2 + "\">" + (i+1) + "</td>" +
-      "<td class=\"" + rc2 + "\">" + s.score + "/100</td>" +
-      "<td>" + (s.player_name || "—") + "</td>" +
-      "<td style=\"font-size:.7rem;color:var(--dim)\">" + (s.clinic_name || "—") + "</td>" +
-      "<td>" + (s.difficulty || "—") + "</td>" +
-      "<td>" + (s.treated || 0) + "</td>" +
-      "<td style=\"font-size:.68rem;color:var(--dim)\">" + dt + "</td>" +
-      "</tr>";
+
+  var totalShown = 0;
+  var html = "";
+
+  difficulties.forEach(function(diff) {
+    // Filter and sort this difficulty, take top 10
+    var bucket = rows
+      .filter(function(s) { return (s.difficulty || "") === diff.key; })
+      .sort(function(a, b) { return b.score - a.score; })
+      .slice(0, 10);
+
+    totalShown += bucket.length;
+
+    html += "<div class=\"lb-section\">";
+    html += "<div class=\"lb-diff-header\" style=\"color:" + diff.color + "\">" + diff.label + "</div>";
+
+    if (!bucket.length) {
+      html += "<div class=\"lb-msg\" style=\"font-size:.78rem;padding:.6rem 0\">No scores yet for this difficulty.</div>";
+    } else {
+      html += "<table class=\"lb-table\"><thead><tr>" +
+        "<th>#</th><th>Score</th><th>Player</th><th>Clinic</th><th>Treated</th><th>Date</th>" +
+        "</tr></thead><tbody>";
+
+      bucket.forEach(function(s, i) {
+        var rc2 = i === 0 ? "rank-gold" : i === 1 ? "rank-silver" : i === 2 ? "rank-bronze" : "";
+        var dt = s.created_at ? new Date(s.created_at).toLocaleDateString() : (s.date || "—");
+        html += "<tr>" +
+          "<td class=\"" + rc2 + "\">" + (i + 1) + "</td>" +
+          "<td class=\"" + rc2 + "\">" + s.score + "/100</td>" +
+          "<td>" + (s.player_name || "—") + "</td>" +
+          "<td style=\"font-size:.7rem;color:var(--dim)\">" + (s.clinic_name || "—") + "</td>" +
+          "<td>" + (s.treated || 0) + "</td>" +
+          "<td style=\"font-size:.68rem;color:var(--dim)\">" + dt + "</td>" +
+          "</tr>";
+      });
+
+      html += "</tbody></table>";
+    }
+
+    html += "</div>";
   });
-  html += "</tbody></table>";
+
+  document.getElementById("lbSub").textContent = "Top 10 per difficulty · " + totalShown + " score" + (totalShown !== 1 ? "s" : "") + " shown";
   document.getElementById("lbContent").innerHTML = html;
 }
 
