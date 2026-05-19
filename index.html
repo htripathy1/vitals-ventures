@@ -339,6 +339,29 @@ const SUPABASE_URL = 'https://beveheokifcqabdkzbzv.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldmVoZW9raWZjcWFiZGt6Ynp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5OTg4OTEsImV4cCI6MjA5MTU3NDg5MX0.uKqEYJGZRkGl_0c1jsJEcQ020aHIbKE3BB2-Rf4Yp8A';
 const SUPABASE_READY = !!(SUPABASE_URL && SUPABASE_KEY);
 
+// ── NAME SANITIZER ──
+// Uses \b word boundaries so "ass" does NOT flag "bass", "class", "assassin" etc.
+// Only whole words match. Add or remove entries from BAD_WORDS as needed.
+var BAD_WORDS = [
+  "fuck","shit","ass","bitch","cunt","dick","cock","pussy","nigger","nigga",
+  "faggot","fag","retard","whore","slut","bastard","prick","twat","wank",
+  "bollocks","arse","asshole","arsehole","motherfucker","fucker","bullshit",
+  "dumbass","jackass","dipshit","shithead","fuckhead","damn","crap","piss",
+  "nazi","hitler","rape","rapist","porn","hentai","dildo","boner","jizz","cum"
+];
+function sanitizeName(raw) {
+  if (!raw || !String(raw).trim()) return "---";
+  var cleaned = String(raw).trim();
+  for (var i = 0; i < BAD_WORDS.length; i++) {
+    // \b matches word boundaries — whole words only
+    var re = new RegExp("\\b" + BAD_WORDS[i] + "\\b", "i");
+    if (re.test(cleaned)) return "---";
+  }
+  // Block names that contain no letters at all (pure symbols/numbers — likely spam)
+  if (/^[^a-zA-Z]+$/.test(cleaned)) return "---";
+  return cleaned;
+}
+
 async function dbInsert(row) {
   if (!SUPABASE_READY) return false;
   try {
@@ -863,7 +886,7 @@ function startGame() {
   qCosts = 0;
 
   // Difficulty label badges (emoji-free to avoid encoding issues)
-  var diffEmojis = [" "," "," "];
+  var diffEmojis = ["🟢 ","🟡 ","🔴 "];
   document.getElementById("lvlBadge").textContent = diffEmojis[selDiff] + d.name;
   var mb = document.getElementById("modeBadge");
   if (selMode === "friends") {
@@ -1353,7 +1376,7 @@ async function endGame() {
   var composite = Math.round(finScore * 0.4 + G.health * 0.4 + G.reputation * 0.2);
   var total     = G.insT + G.medT + G.uninsT;
 
-  document.getElementById("endClinic").textContent = clinicName + " · " + DIFFS[G.diff].name + " · " + G.maxQ + " Quarters";
+  document.getElementById("endClinic").textContent = sanitizeName(clinicName) + " · " + DIFFS[G.diff].name + " · " + G.maxQ + " Quarters";
   document.getElementById("esCash").textContent    = "$" + G.cash.toLocaleString();
   document.getElementById("esHealth").textContent  = G.health + "/100";
   document.getElementById("esRep").textContent     = G.reputation + "/100";
@@ -1378,10 +1401,8 @@ async function endGame() {
     return "<div class=\"achv-badge\">⭐ " + b + "</div>";
   }).join("");
 
-  // Level up message
-  document.getElementById("lvlupMsg").innerHTML = (G.diff < 2 && composite >= 70)
-    ? "<div class=\"lvlup\">Score 70+ — " + DIFFS[G.diff + 1].name + " difficulty unlocked!</div>"
-    : "";
+  // Level up message removed — all difficulties available from the start
+  document.getElementById("lvlupMsg").innerHTML = "";
 
   // Personalized debrief
   var items = [];
@@ -1426,8 +1447,8 @@ async function endGame() {
 
   // Save score
   var entry = {
-    player_name:       playerName,
-    clinic_name:       clinicName,
+    player_name:       sanitizeName(playerName),
+    clinic_name:       sanitizeName(clinicName),
     room_code:         selMode === "friends" ? roomCode : null,
     mode:              selMode,
     score:             composite,
@@ -1501,9 +1522,9 @@ async function loadLB() {
 
 function renderLB(rows) {
   var difficulties = [
-    { key: "Intern",    label: "Intern",    color: "var(--mint)" },
-    { key: "Resident",  label: "Resident",  color: "var(--gold)" },
-    { key: "Attending", label: "Attending", color: "var(--coral)" }
+    { key: "Attending", label: "🔴 Attending", color: "var(--coral)" },
+    { key: "Resident",  label: "🟡 Resident",  color: "var(--gold)" },
+    { key: "Intern",    label: "🟢 Intern",    color: "var(--mint)" }
   ];
 
   if (!rows.length) {
