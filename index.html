@@ -41,7 +41,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 /* SCREEN 1: LANDING */
 .s1-wrap{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem}
 .s1-inner{max-width:860px;width:100%;text-align:center}
-.s1-inner h1{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:800;color:#A8DECE;text-shadow:0 0 40px rgba(78,204,163,.3),0 0 80px rgba(78,204,163,.1);margin-bottom:.4rem}
+.s1-inner h1{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:800;background:linear-gradient(135deg,var(--mint),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.4rem}
 .s1-tagline{font-size:1.05rem;color:var(--dim);line-height:1.6;margin-bottom:.5rem}
 .s1-pill{display:inline-block;background:rgba(78,204,163,.12);border:1px solid rgba(78,204,163,.3);border-radius:30px;padding:.35rem 1rem;font-size:.75rem;color:var(--mint);margin-bottom:2rem;font-weight:600;letter-spacing:.5px}
 
@@ -337,6 +337,33 @@ const SUPABASE_URL = 'https://beveheokifcqabdkzbzv.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJldmVoZW9raWZjcWFiZGt6Ynp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5OTg4OTEsImV4cCI6MjA5MTU3NDg5MX0.uKqEYJGZRkGl_0c1jsJEcQ020aHIbKE3BB2-Rf4Yp8A';
 const SUPABASE_READY = !!(SUPABASE_URL && SUPABASE_KEY);
 
+// ── NAME SANITIZER ──
+// Checks player name and clinic name before they are saved or displayed.
+// Any name matching a blocked word/pattern is replaced with "---".
+// This runs client-side, so a determined bad actor could bypass it via
+// the API directly — the Supabase CHECK constraint (see security notes)
+// is the server-side backstop that handles that case.
+var BAD_WORDS = [
+  "fuck","shit","ass","bitch","cunt","dick","cock","pussy","nigger","nigga",
+  "faggot","fag","retard","whore","slut","bastard","damn","crap","piss",
+  "twat","wank","bollocks","arse","asshole","arsehole","motherfucker","fucker",
+  "bullshit","dumbass","jackass","dipshit","shithead","fuckhead","prick",
+  "nazi","hitler","rape","rapist","porn","sex","nude","penis","vagina","boob",
+  "tit","cum","jizz","sperm","boner","erection","dildo","condom","hentai"
+];
+function sanitizeName(raw) {
+  if (!raw || !raw.trim()) return "---";
+  var cleaned = raw.trim();
+  // Check against each bad word using a word-boundary-aware regex
+  for (var i = 0; i < BAD_WORDS.length; i++) {
+    var re = new RegExp(BAD_WORDS[i], "i");
+    if (re.test(cleaned)) return "---";
+  }
+  // Block names that are only symbols/numbers (likely spam)
+  if (/^[^a-zA-Z]+$/.test(cleaned)) return "---";
+  return cleaned;
+}
+
 async function dbInsert(row) {
   if (!SUPABASE_READY) return false;
   try {
@@ -370,10 +397,10 @@ async function dbStats() {
 <div class="screen active" id="screen1">
 <div class="s1-wrap">
 <div class="s1-inner">
-  <div class="s1-pill">A Healthcare Finance Simulation</div>
+  <div class="s1-pill">Healthcare Finance Simulation</div>
   <h1>Vitals &amp; Ventures</h1>
-  <p class="s1-tagline">Play as the director of a community health clinic.<br>
-    Treat patients, manage your budget, and balance <strong style="color:var(--mint)">mission</strong> with <strong style="color:var(--gold)">margin</strong>.<br>
+  <p class="s1-tagline">You're the director of a community health clinic.<br>
+    Treat patients. Manage your budget. Balance <strong style="color:var(--mint)">mission</strong> and <strong style="color:var(--gold)">margin</strong>.<br>
     Discover why healthcare finance is harder than it might seem.
   </p>
 
@@ -389,11 +416,11 @@ async function dbStats() {
       <div class="hc-desc">Every quarter, patients arrive with different insurance statuses. Insured = profitable. Uninsured = unprofitable but maximum community impact. Same treatment, different sustainability.</div>
     </div>
     <div class="hiw-card">
-      <div class="hc-title">Manage Budget</div>
+      <div class="hc-title">Manage the Budget</div>
       <div class="hc-desc">Pay staff, handle events, make investments. When cash hits zero, the clinic closes. Every dollar you spend is a dollar you can't spend elsewhere (<em>opportunity cost</em>).</div>
     </div>
     <div class="hiw-card">
-      <div class="hc-title">Handle Surprises</div>
+      <div class="hc-title">Handle Curveballs</div>
       <div class="hc-desc">Flu surges, equipment failures, Medicaid rate cuts, natural disasters. Healthcare finance is unpredictable. Your <em>cash reserve</em> is your protection.</div>
     </div>
     <div class="hiw-card">
@@ -682,7 +709,7 @@ var PATIENTS = [
   {name:"Ahmad H.",   cond:"Dental Emergency",        ins:"medicaid",  cost:700,  reimb:595,  hp:2},
   {name:"Linda S.",   cond:"Cancer Screening",        ins:"insured",   cost:1000, reimb:2000, hp:5},
   {name:"Miguel F.",  cond:"Work Injury",             ins:"uninsured", cost:900,  reimb:0,    hp:3},
-  {name:"Diya K.",    cond:"Pediatric Fever",         ins:"insured",   cost:250,  reimb:600,  hp:2},
+  {name:"Priya K.",   cond:"Pediatric Fever",         ins:"insured",   cost:250,  reimb:600,  hp:2},
   {name:"Tom B.",     cond:"Substance Use Intake",    ins:"medicaid",  cost:500,  reimb:425,  hp:7},
   {name:"Carmen V.",  cond:"Post-Surgical Follow-up", ins:"insured",   cost:400,  reimb:900,  hp:2},
   {name:"James W.",   cond:"Pediatric Asthma",        ins:"medicaid",  cost:400,  reimb:340,  hp:4},
@@ -768,15 +795,15 @@ var DECISIONS = [
 // ── TUTORIAL ──
 var TUT = [
   {title:"Welcome to Vitals and Ventures",
-   body:"<p>You run a community health clinic. The goal is not just to make money and not just to help everyone; it is both.</p><p>That combination is what healthcare finance deals with every day.</p>"},
+   body:"<p>You run a community health clinic. The goal is not just to make money and not just to help everyone. It is both, simultaneously.</p><p>That tension is what real healthcare finance feels like every day.</p>"},
   {title:"Your Four Dashboard Metrics",
-   body:"<div class=\"tut-hi\"> <b>Cash Balance</b> - Hits zero and the clinic closes. This is your hard constraint.<br><br> <b>Community Health</b> - Rises when you treat patients, falls when you turn them away.<br><br> <b>Staff</b> - Each staff member costs a fixed amount every quarter regardless of patient volume. That is a fixed cost.<br><br> <b>Reputation</b> - Affects grant eligibility and quality bonus payments.</div>"},
+   body:"<div class=\"tut-hi\"> <b>Cash Balance</b> - Hits zero and the clinic closes. This is your hard constraint.<br><br> <b>Community Health</b> - Rises when you treat patients, falls when you turn them away.<br><br>👥 <b>Staff</b> - Each staff member costs a fixed amount every quarter regardless of patient volume. That is a fixed cost.<br><br> <b>Reputation</b> - Affects grant eligibility and quality bonus payments.</div>"},
   {title:"The Insurance Tier System",
    body:"<p>Same patient, same treatment. Three completely different financial outcomes:</p><div class=\"tut-hi\"> <b>Insured</b> - Reimbursement exceeds your cost. Treating this patient is profitable.<br><br> <b>Medicaid</b> - Reimbursement covers about 60% of cost. You take a modest loss but serve the community.<br><br> <b>Uninsured</b> - Zero reimbursement. Full cost to you. Maximum community impact, maximum financial strain.</div><p>This is not a game abstraction. U.S. community health centers navigate this every single day.</p>"},
   {title:"Events, Decisions and Concepts",
-   body:"<p>Each quarter brings a <b>random event</b>: flu surge, grant, equipment failure, staff burnout, plus one <b>strategic decision</b>. Both require critical financial thinking, not just immediate reactions.</p><p>You will also see a <b>Finance Concept of the Quarter</b> before each round, and concept tips appear as you act. These connect your decisions to financial vocabulary.</p>"},
+   body:"<p>Each quarter brings a <b>random event</b>: flu surge, grant, equipment failure, staff burnout, plus one <b>strategic decision</b>. Both require financial thinking, not just immediate reactions.</p><p>You will also see a <b>Finance Concept of the Quarter</b> before each round, and concept tips appear as you act. These connect your decisions to financial vocabulary.</p>"},
   {title:"The Composite Score",
-   body:"<div class=\"tut-hi\">Composite = 40% Financial + 40% Community Health + 20% Reputation</div><p>This formula is the lesson of the game. If you reject every uninsured patient, community Health falls. If you treat everyone regardless of cost, you go bankrupt.</p><p>The only method to a high score is balance.</p>"},
+   body:"<div class=\"tut-hi\">Composite = 40% Financial + 40% Community Health + 20% Reputation</div><p>This formula is the lesson of the game. Reject every uninsured patient? Community Health falls. Treat everyone regardless of cost? You go bankrupt.</p><p>The only method to a high score is balance. This is how every community health center in America must operate.</p>"},
 ];
 var tutIdx = 0;
 
@@ -861,7 +888,7 @@ function startGame() {
   qCosts = 0;
 
   // Difficulty label badges (emoji-free to avoid encoding issues)
-  var diffEmojis = ["","",""];
+  var diffEmojis = ["🟢 ","🟡 ","🔴 "];
   document.getElementById("lvlBadge").textContent = diffEmojis[selDiff] + d.name;
   var mb = document.getElementById("modeBadge");
   if (selMode === "friends") {
@@ -1351,7 +1378,7 @@ async function endGame() {
   var composite = Math.round(finScore * 0.4 + G.health * 0.4 + G.reputation * 0.2);
   var total     = G.insT + G.medT + G.uninsT;
 
-  document.getElementById("endClinic").textContent = clinicName + " · " + DIFFS[G.diff].name + " · " + G.maxQ + " Quarters";
+  document.getElementById("endClinic").textContent = sanitizeName(clinicName) + " · " + DIFFS[G.diff].name + " · " + G.maxQ + " Quarters";
   document.getElementById("esCash").textContent    = "$" + G.cash.toLocaleString();
   document.getElementById("esHealth").textContent  = G.health + "/100";
   document.getElementById("esRep").textContent     = G.reputation + "/100";
@@ -1422,10 +1449,14 @@ async function endGame() {
     return "<div class=\"db-item\"><div class=\"db-concept\">" + d.concept + "</div><div class=\"db-text\">" + d.text + "</div></div>";
   }).join("");
 
+  // Sanitize names before saving
+  var safePlayerName = sanitizeName(playerName);
+  var safeClinicName = sanitizeName(clinicName);
+
   // Save score
   var entry = {
-    player_name:       playerName,
-    clinic_name:       clinicName,
+    player_name:       safePlayerName,
+    clinic_name:       safeClinicName,
     room_code:         selMode === "friends" ? roomCode : null,
     mode:              selMode,
     score:             composite,
