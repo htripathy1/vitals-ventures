@@ -863,7 +863,7 @@ function startGame() {
   qCosts = 0;
 
   // Difficulty label badges (emoji-free to avoid encoding issues)
-  var diffEmojis = ["🟢 ","🟡 ","🔴 "];
+  var diffEmojis = [" "," "," "];
   document.getElementById("lvlBadge").textContent = diffEmojis[selDiff] + d.name;
   var mb = document.getElementById("modeBadge");
   if (selMode === "friends") {
