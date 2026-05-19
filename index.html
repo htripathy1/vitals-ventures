@@ -1467,9 +1467,9 @@ async function endGame() {
     created_at:        new Date().toISOString()
   };
   saveLocal(entry);
-  if (selMode === "friends" && SUPABASE_READY) {
+  if (SUPABASE_READY) {
     var ok = await dbInsert(entry);
-    if (ok) showToast("Score posted to leaderboard!");
+    if (ok) showToast(selMode === "friends" ? "Score posted to leaderboard!" : "Score saved to global leaderboard!");
   }
 gtag('event', 'game_completed', {score: composite, difficulty: DIFFS[G.diff].name, mode: selMode});  
 showScreen("endScreen");
