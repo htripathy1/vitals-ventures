@@ -8,10 +8,10 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f1923">
 <title>Vitals & Ventures - Healthcare Finance Simulation Game</title>
-<meta name="description" content="Run a community health clinic. Make real financial decisions about patient care, insurance reimbursement, and operating budgets. A free educational game teaching healthcare finance through simulation.">
+<meta name="description" content="Run a community health clinic. Make decisions about patient care, insurance reimbursement, and operating budgets. Free educational game teaching healthcare finance through simulation.">
 <meta name="keywords" content="healthcare finance game, medical business simulation, educational finance game, health economics, community health clinic simulation">
 <meta property="og:title" content="Vitals & Ventures - Healthcare Finance Simulation">
-<meta property="og:description" content="Can you balance mission and margin? Run a community health clinic and discover why healthcare finance is harder than it looks.">
+<meta property="og:description" content="Can you balance mission and margin? Run a community health clinic and find out.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vitals-and-ventures.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
@@ -400,9 +400,9 @@ async function dbStats() {
 <div class="s1-inner">
   <div class="s1-pill">Healthcare Finance Simulation</div>
   <h1>Vitals &amp; Ventures</h1>
-  <p class="s1-tagline">You're the director of a community health clinic.<br>
-    Treat patients. Manage your budget. Balance <strong style="color:var(--mint)">mission</strong> and <strong style="color:var(--gold)">margin</strong>.<br>
-    Discover why healthcare finance is harder than it might seem.
+  <p class="s1-tagline">Play as the director of a community health clinic.<br>
+    Treat patients, manage your budget, and balance <strong style="color:var(--mint)">mission</strong> and <strong style="color:var(--gold)">margin</strong>.<br>
+    Dive into the complexity of healthcare finance.
   </p>
 
   <div class="s1-btns">
@@ -414,30 +414,30 @@ async function dbStats() {
   <div class="hiw-grid">
     <div class="hiw-card">
       <div class="hc-title">Treat Patients</div>
-      <div class="hc-desc">Every quarter, patients arrive with different insurance statuses. Insured = profitable. Uninsured = unprofitable but maximum community impact. Same treatment, different sustainability.</div>
+      <div class="hc-desc">Every quarter, patients arrive with different insurance statuses. Insured is profitable, and uninsured is unprofitable (but maximum community impact). Same treatment, but one is more sustainable</div>
     </div>
     <div class="hiw-card">
       <div class="hc-title">Manage the Budget</div>
-      <div class="hc-desc">Pay staff, handle events, make investments. When cash hits zero, the clinic closes. Every dollar you spend is a dollar you can't spend elsewhere (<em>opportunity cost</em>).</div>
+      <div class="hc-desc">Pay staff, handle events, make investments. Every dollar you spend is a dollar you can't spend elsewhere (<em>opportunity cost</em>).</div>
     </div>
     <div class="hiw-card">
-      <div class="hc-title">Handle Curveballs</div>
-      <div class="hc-desc">Flu surges, equipment failures, Medicaid rate cuts, natural disasters. Healthcare finance is unpredictable. Your <em>cash reserve</em> is your protection.</div>
+      <div class="hc-title">Handle Surprises</div>
+      <div class="hc-desc">Flu surges, equipment failures, Medicaid rate cuts, natural disasters, etc. Healthcare finance is unpredictable, so your <em>cash reserve</em> is your protection.</div>
     </div>
     <div class="hiw-card">
       <div class="hc-title">Balance the Score</div>
-      <div class="hc-desc">Composite score = 40% Financials + 40% Community Health + 20% Reputation. Only maximizing one aspect leads to failure. <em>Multi-objective balance</em> is the goal.</div>
+      <div class="hc-desc">The composite score is made up of 40% Financials + 40% Community Health + 20% Reputation. Only maximizing one aspect leads to failure. <em>Balance</em> is the goal.</div>
     </div>
   </div>
 
   <p style="font-size:.78rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.6px;text-align:left;margin-bottom:.6rem">Finance Concepts Built Into Every Decision</p>
   <div class="concepts-strip">
-    <div class="cstrip-item"><div class="ci-term">Payer Mix</div><div class="ci-def">The ratio of insured vs. Medicaid vs. uninsured patients. This controls revenue.</div></div>
-    <div class="cstrip-item"><div class="ci-term">Operating Margin</div><div class="ci-def">Revenue minus total costs per quarter. Negative means cash is being burned through.</div></div>
+    <div class="cstrip-item"><div class="ci-term">Payer Mix</div><div class="ci-def">The ratio of insured vs. Medicaid vs. uninsured patients, controlling revenue.</div></div>
+    <div class="cstrip-item"><div class="ci-term">Operating Margin</div><div class="ci-def">Revenue minus total costs per quarter. Negative means cash is being burned through too quickly.</div></div>
     <div class="cstrip-item"><div class="ci-term">Opportunity Cost</div><div class="ci-def">Choosing one thing means giving up another. Every hire is equipment you can't buy.</div></div>
     <div class="cstrip-item"><div class="ci-term">Cash Runway</div><div class="ci-def">How many quarters until you run out of cash at your current burn rate.</div></div>
-    <div class="cstrip-item"><div class="ci-term">Cross-Subsidy</div><div class="ci-def">Profits from insured patients fund care for uninsured ones, driving balance</div></div>
-    <div class="cstrip-item"><div class="ci-term">Revenue Diversification</div><div class="ci-def">Grants, insurance, and Medicaid are three streams. Lose one and the others must compensate.</div></div>
+    <div class="cstrip-item"><div class="ci-term">Cross-Subsidy</div><div class="ci-def">Profits from insured patients help to fund care for uninsured ones, ensuring balance.</div></div>
+    <div class="cstrip-item"><div class="ci-term">Revenue Diversification</div><div class="ci-def">Grants, insurance, and Medicaid are three income streams. Lose one and the others have to compensate.</div></div>
   </div>
 
 </div>
@@ -673,25 +673,25 @@ var DIFFS = [
 // FINANCE CONCEPTS (rotate each quarter) 
 var QCONCEPTS = [
   {term:"Payer Mix",
-   def:"The ratio of insured, Medicaid, and uninsured patients you treat. Over-reliance on any one payer creates financial instability."},
+   def:"The ratio of insured, Medicaid, and uninsured patients you treat. Over-reliance on any one creates financial weakness."},
   {term:"Operating Margin",
-   def:"Revenue minus costs. If you spend more than you earn this quarter, your margin is negative. Sustainable clinics need a positive average."},
+   def:"Revenue minus costs. If you spend more than you earn this quarter, your margin is negative. Clinics need a positive average."},
   {term:"Opportunity Cost",
-   def:"Every dollar spent on staff or equipment is unavailable for something else. Every decision urges a choice about what you give up."},
+   def:"Every dollar spent on staff or equipment is unavailable for something else. Every decision is a choice about what you give up."},
   {term:"Cash Runway",
-   def:"How many quarters you can operate before hitting zero cash. Track your burn rate: if costs exceed revenue consistently, the runway shortens fast."},
+   def:"How many quarters you can operate before hitting zero cash. If costs exceed revenue consistently, the runway will shorten quickly."},
   {term:"Cross-Subsidy",
    def:"Profits from insured patients fund care for uninsured ones. A clinic with no insured patients cannot sustain its mission."},
   {term:"Revenue Diversification",
-   def:"Clinics with multiple revenue streams survive shocks better. Over-reliance on one source is concentration risk."},
+   def:"Clinics with multiple revenue streams survive shocks better. Over-reliance on one source is a risk."},
   {term:"Fixed vs. Variable Costs",
-   def:"Staff salaries are fixed: they arrive every quarter whether you treat 1 patient or 100. Fixed costs set your minimum cash burn."},
+   def:"Staff salaries are fixed: they arrive every quarter no matter how many patients you treat. This sets your minimum cash burn."},
   {term:"Risk Reserves",
-   def:"Cash held as a buffer against unexpected events. Emergencies will happen, and reserves are your insurance policy."},
+   def:"Cash held as a buffer against unexpected events. Reserves are your insurance against emergencies."},
   {term:"Break-Even Point",
-   def:"The volume of insured patients needed each quarter to cover fixed staff costs. Below that threshold, you rely on grants or run in a deficit."},
+   def:"The amount of insured patients needed each quarter to cover staff costs. Below that amount, you rely on grants or run in a deficit."},
   {term:"Mission vs. Margin",
-   def:"Pure profit means turning away all uninsured: high cash, zero community health. Pure mission means treating everyone: great health, bankruptcy. Balance is the only option."},
+   def:"Only profit means turning away all uninsured -> high cash, but zero community health. Only mission means treating everyone -> great health, but bankruptcy. Balance is a necessity."},
 ];
 
 // PATIENTS
@@ -710,7 +710,7 @@ var PATIENTS = [
   {name:"Ahmad H.",   cond:"Dental Emergency",        ins:"medicaid",  cost:700,  reimb:595,  hp:2},
   {name:"Linda S.",   cond:"Cancer Screening",        ins:"insured",   cost:1000, reimb:2000, hp:5},
   {name:"Miguel F.",  cond:"Work Injury",             ins:"uninsured", cost:900,  reimb:0,    hp:3},
-  {name:"Priya K.",   cond:"Pediatric Fever",         ins:"insured",   cost:250,  reimb:600,  hp:2},
+  {name:"Diya K.",    cond:"Pediatric Fever",         ins:"insured",   cost:250,  reimb:600,  hp:2},
   {name:"Tom B.",     cond:"Substance Use Intake",    ins:"medicaid",  cost:500,  reimb:425,  hp:7},
   {name:"Carmen V.",  cond:"Post-Surgical Follow-up", ins:"insured",   cost:400,  reimb:900,  hp:2},
   {name:"James W.",   cond:"Pediatric Asthma",        ins:"medicaid",  cost:400,  reimb:340,  hp:4},
