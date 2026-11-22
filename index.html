@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#0f1923">
+<meta name="theme-color" content="#0d1219">
 <title>Vitals & Ventures - Healthcare Finance Simulation Game</title>
 <meta name="description" content="Run a community health clinic. Make decisions about patient care, insurance reimbursement, and operating budgets. Free educational game teaching healthcare finance through simulation.">
 <meta name="keywords" content="healthcare finance game, medical business simulation, educational finance game, health economics, community health clinic simulation">
@@ -14,315 +14,377 @@
 <meta property="og:description" content="Can you balance mission and margin? Run a community health clinic and find out.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://vitals-and-ventures.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 <style>
+/* Direction
+   Product: a browser game that teaches healthcare finance by running a community clinic, quarter by quarter
+   Character: steady, candid, a little bookish
+   World: a clinic back office after hours - ledger, chart folders, the local paper
+   Moments: the quarterly Tribune front page, the payer mix bar
+   Signature: ledger figures - mono, tabular, every amount signed */
 :root{
-  --bg:#0f1923;--card:#1a2736;--card2:#243447;
-  --mint:#4ECCA3;--coral:#FF6B6B;--gold:#FFD93D;
-  --blue:#6C9BCF;--purple:#A78BFA;
-  --text:#E8EDF2;--dim:#7A8BA0;
-  --radius:14px;--shadow:0 4px 24px rgba(0,0,0,.35);
+  --bg-deep:#0a0e14;--bg:#0d1219;--card:#121922;--raised:#19212c;--raised-2:#202a37;
+  --line:rgba(233,237,242,.08);--line-2:rgba(233,237,242,.14);
+  --text:#e9edf2;--text-2:#a6b0bd;--muted:#7f8a99;
+  --accent:#4ecca3;--accent-hover:#66d6b2;--accent-ink:#08140f;
+  --pos:#5cc99c;--neg:#ec6b6b;--warn:#e3b94f;
+  --ins:#4ecca3;--med:#6c9bcf;--unins:#ec6b6b;
+  --paper:#f1ebdd;--paper-ink:#1e1b16;--paper-2:#5b544a;--paper-rule:rgba(30,27,22,.16);
+  --r-sm:6px;--r-ctl:8px;--r-card:12px;--r-panel:16px;
+  --dim:#7f8a99;--mint:#4ecca3;--coral:#ec6b6b;--gold:#e3b94f;--blue:#6c9bcf;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-overflow-scrolling:touch}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body{font-family:var(--sans);font-size:15px;line-height:1.5;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+b,strong{font-weight:600;color:var(--text)}
+em{font-style:normal;color:var(--text)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:0}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
 .screen{display:none;min-height:100vh}.screen.active{display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ico{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
 /* BUTTONS */
-.btn{padding:.75rem 1.8rem;border-radius:30px;border:none;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
-.btn-mint{background:linear-gradient(135deg,var(--mint),#38b28a);color:#0f1923}
-.btn-mint:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(78,204,163,.35)}
-.btn-gold{background:linear-gradient(135deg,var(--gold),#e6c235);color:#0f1923}
-.btn-coral{background:var(--coral);color:#fff}
-.btn-out{background:transparent;border:1.5px solid var(--dim);color:var(--text)}
-.btn-out:hover{border-color:var(--mint);color:var(--mint)}
-.btn-sm{padding:.5rem 1.1rem;font-size:.82rem;border-radius:20px;min-height:40px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:var(--r-ctl);border:1px solid transparent;font-family:var(--sans);font-size:15px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background-color .15s var(--ease),border-color .15s var(--ease),color .15s var(--ease),transform .12s var(--ease);-webkit-tap-highlight-color:transparent}
+.btn:active{transform:scale(.98)}
+.btn-mint{background:var(--accent);color:var(--accent-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.btn-mint:hover{background:var(--accent-hover)}
+.btn-out{background:var(--raised);border-color:var(--line-2);color:var(--text)}
+.btn-out:hover{background:var(--raised-2)}
+.btn-ghost{background:transparent;color:var(--text-2)}
+.btn-ghost:hover{background:var(--raised);color:var(--text)}
+.btn-sm{height:36px;padding:0 14px;font-size:14px}
+.btn-icon{width:36px;padding:0}
+.link{background:none;border:none;font:inherit;font-size:14px;color:var(--text-2);cursor:pointer;padding:8px 4px;border-radius:var(--r-sm);transition:color .15s var(--ease)}
+.link:hover{color:var(--text)}
 
 /* SCREEN 1: LANDING */
-.s1-wrap{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem}
-.s1-inner{max-width:860px;width:100%;text-align:center}
-.s1-inner h1{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:800;background:linear-gradient(135deg,var(--mint),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.4rem}
-.s1-tagline{font-size:1.05rem;color:var(--dim);line-height:1.6;margin-bottom:.5rem}
-.s1-pill{display:inline-block;background:rgba(78,204,163,.12);border:1px solid rgba(78,204,163,.3);border-radius:30px;padding:.35rem 1rem;font-size:.75rem;color:var(--mint);margin-bottom:2rem;font-weight:600;letter-spacing:.5px}
+.site-nav{height:64px;border-bottom:1px solid var(--line)}
+.nav-in{height:100%;display:flex;align-items:center;justify-content:space-between}
+.wordmark{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--text)}
+.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:center;min-height:calc(100vh - 64px);padding-top:64px;padding-bottom:80px}
+.eyebrow{font-size:14px;color:var(--muted);margin-bottom:20px}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:56px;line-height:1.06;letter-spacing:-.02em;max-width:15ch}
+.lede{font-size:19px;line-height:1.55;color:var(--text-2);max-width:32rem;margin-top:24px}
+.hero-actions{display:flex;gap:12px;margin-top:40px}
+.hero-actions .btn{height:48px}
 
-.hiw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:1rem;margin-bottom:2rem;text-align:left}
-.hiw-card{background:var(--card);border-radius:var(--radius);padding:1.2rem;border:1px solid #2a3f52;transition:border-color .2s}
-.hiw-card:hover{border-color:var(--mint)}
-.hiw-card .hc-icon{font-size:1.8rem;margin-bottom:.6rem}
-.hiw-card .hc-title{font-weight:700;font-size:.88rem;margin-bottom:.3rem;color:var(--text)}
-.hiw-card .hc-desc{font-size:.74rem;color:var(--dim);line-height:1.5}
+/* game board preview */
+.preview{background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-panel);padding:24px;box-shadow:0 24px 64px rgba(0,0,0,.35)}
+.pv-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.pv-name{font-weight:500}
+.pv-meta{font-size:12px;color:var(--muted)}
+.pv-figs{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;padding:20px 0;border-bottom:1px solid var(--line)}
+.pv-lbl{font-size:13px;color:var(--muted)}
+.pv-cash{font-size:40px;line-height:1.1;font-weight:400;margin-top:4px}
+.pv-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.pv-mini{display:flex;flex-direction:column;gap:8px;justify-content:center}
+.pv-mini div{display:flex;justify-content:space-between;font-size:13px;color:var(--text-2)}
+.pv-mini .mono{color:var(--text)}
+.pv-mix{padding:20px 0 16px}
+.pv-mix .payer-bar{margin:10px 0 10px}
+.pv-legend{display:flex;gap:16px;font-size:12px;color:var(--text-2)}
+.pv-patients{display:flex;flex-direction:column;gap:8px}
+.pv-patients .pc{margin:0}
 
-.concepts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-bottom:2rem}
-.cstrip-item{background:var(--card2);border-radius:10px;padding:.8rem;border:1px solid #2a3f52;text-align:left}
-.cstrip-item .ci-term{font-weight:700;font-size:.76rem;color:var(--gold);margin-bottom:.2rem}
-.cstrip-item .ci-def{font-size:.67rem;color:var(--dim);line-height:1.4}
-
-.s1-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin:.8rem 0 1.2rem}
-
-/* COMPACT LAYOUT for shorter screens (Option B) */
-@media(max-height:800px){
-  .s1-pill{margin-bottom:1rem}
-  .s1-inner h1{font-size:2.4rem}
-  .s1-tagline{font-size:.92rem;margin-bottom:.3rem}
-  .s1-btns{margin:.6rem 0 1rem}
-  .hiw-grid{gap:.7rem;margin-bottom:1.2rem}
-  .hiw-card{padding:.85rem}
-  .concepts-strip{gap:.45rem;margin-bottom:1.2rem}
-  .cstrip-item{padding:.55rem}
-}
-@media(max-height:680px){
-  .s1-inner h1{font-size:2rem}
-  .s1-tagline{font-size:.85rem}
-  .hiw-grid{margin-bottom:.8rem}
-  .hiw-card .hc-desc{font-size:.68rem}
-  .concepts-strip{margin-bottom:.8rem}
-}
+.section{padding-top:96px;padding-bottom:0}
+.section:last-of-type{padding-bottom:128px}
+.sec-h{font-family:var(--serif);font-weight:500;font-size:32px;line-height:1.15;margin-bottom:32px}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.steps li{border-top:1px solid var(--line-2);padding-top:20px}
+.step-n{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.step-t{font-size:17px;font-weight:500;margin:12px 0 8px}
+.step-d{font-size:14px;color:var(--text-2);line-height:1.6}
+.glossary{display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+.gl-row{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:16px 0;border-top:1px solid var(--line)}
+.gl-row dt{font-weight:500;font-size:15px}
+.gl-row dd{font-size:14px;color:var(--text-2);line-height:1.6}
 
 /* SCREEN 2: SETUP */
-.s2-wrap{min-height:100vh;background:var(--bg);padding:2rem}
+.s2-wrap{min-height:100vh;padding:64px 32px 96px}
 .s2-inner{max-width:720px;margin:0 auto}
-.s2-inner h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--mint);margin-bottom:.3rem}
-.s2-sub{font-size:.85rem;color:var(--dim);margin-bottom:1.8rem}
-
-.setup-section{margin-bottom:1.6rem}
-.setup-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.7px;color:var(--dim);margin-bottom:.5rem;font-weight:700}
-.field-input{width:100%;background:var(--card2);border:1.5px solid #2a3f52;border-radius:10px;padding:.75rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:1rem;outline:none;transition:border-color .2s}
-.field-input:focus{border-color:var(--mint)}
-.field-row{display:flex;gap:.6rem;align-items:center}
+.s2-inner h2,.page-h{font-family:var(--serif);font-weight:500;font-size:36px;line-height:1.15}
+.s2-sub{font-size:16px;color:var(--text-2);margin:8px 0 40px}
+.setup-section{margin-bottom:32px}
+.setup-label{font-size:14px;font-weight:500;color:var(--text-2);margin-bottom:8px}
+.field-input{width:100%;height:48px;background:var(--raised);border:1px solid var(--line-2);border-radius:var(--r-ctl);padding:0 16px;color:var(--text);font-family:var(--sans);font-size:16px;outline:none;transition:border-color .15s var(--ease)}
+.field-input::placeholder{color:var(--muted)}
+.field-input:focus{border-color:var(--accent)}
+.field-row{display:flex;gap:8px;align-items:center}
 .field-row .field-input{flex:1}
-
-.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
-.mode-card{background:var(--card);border-radius:var(--radius);padding:1.1rem;border:2px solid #2a3f52;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
-.mode-card:hover,.mode-card.sel{border-color:var(--mint);background:rgba(78,204,163,.05)}
-.mode-card .mc-icon{font-size:1.5rem;margin-bottom:.4rem}
-.mode-card .mc-title{font-weight:700;font-size:.9rem}
-.mode-card.sel .mc-title{color:var(--mint)}
-.mode-card .mc-desc{font-size:.72rem;color:var(--dim);margin-top:.2rem;line-height:1.4}
-
-.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
-.diff-card{background:var(--card);border-radius:10px;padding:.9rem;border:2px solid #2a3f52;cursor:pointer;transition:all .2s;text-align:center;-webkit-tap-highlight-color:transparent}
-.diff-card:hover,.diff-card.sel{border-color:var(--mint);background:rgba(78,204,163,.06)}
-.diff-card .dc-label{font-weight:700;font-size:.85rem}
-.diff-card.sel .dc-label{color:var(--mint)}
-.diff-card .dc-sub{font-size:.67rem;color:var(--dim);margin-top:.2rem;line-height:1.4}
-
-.room-hint{font-size:.72rem;color:var(--dim);margin-top:.5rem;line-height:1.45}
-.warn-box{background:rgba(255,107,107,.08);border:1px solid var(--coral);border-radius:8px;padding:.7rem 1rem;font-size:.76rem;color:var(--coral);margin-top:.6rem}
-.s2-btns{display:flex;gap:.8rem;margin-top:2rem;flex-wrap:wrap}
+.field-row .btn{height:48px}
+#roomCodeInput{font-family:var(--mono);letter-spacing:.2em;font-size:18px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.mode-card,.diff-card{position:relative;background:var(--card);border-radius:var(--r-card);padding:16px 16px 16px 44px;border:1px solid var(--line-2);cursor:pointer;transition:background-color .15s var(--ease),border-color .15s var(--ease);-webkit-tap-highlight-color:transparent}
+.mode-card::before,.diff-card::before{content:'';position:absolute;left:16px;top:19px;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--muted);box-sizing:border-box}
+.mode-card:hover,.diff-card:hover{background:var(--raised)}
+.mode-card.sel,.diff-card.sel{border-color:var(--accent);background:var(--raised)}
+.mode-card.sel::before,.diff-card.sel::before{border:4px solid var(--accent)}
+.mc-title,.dc-label{font-weight:500;font-size:15px}
+.mc-desc,.dc-sub{font-size:13px;color:var(--text-2);margin-top:4px;line-height:1.45}
+.dc-sub{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.room-hint{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.5}
+.warn-box{background:rgba(236,107,107,.08);border:1px solid rgba(236,107,107,.3);border-radius:var(--r-ctl);padding:12px 16px;font-size:14px;color:var(--text);margin-top:12px}
+.s2-btns{display:flex;gap:12px;margin-top:40px}
 
 /* TUTORIAL */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem}
-.overlay.active{display:flex}
-.tut-box{background:var(--card);border-radius:var(--radius);padding:2rem;max-width:540px;width:100%;border:2px solid var(--mint);text-align:center;max-height:90vh;overflow-y:auto}
-.tut-box h3{color:var(--mint);font-family:'Playfair Display',serif;font-size:1.25rem;margin-bottom:.8rem}
-.tut-box p{font-size:.87rem;color:var(--dim);line-height:1.65;margin-bottom:.8rem}
-.tut-hi{background:var(--card2);border-radius:10px;padding:1rem;margin:.8rem 0;text-align:left;font-size:.82rem;line-height:1.65}
-.tut-step{font-size:.68rem;color:var(--mint);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.6px}
-.tut-nav{display:flex;gap:.5rem;justify-content:center;margin-top:1rem;flex-wrap:wrap}
+.overlay,.headline-overlay{position:fixed;inset:0;background:rgba(5,8,12,.82);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px}
+.headline-overlay{z-index:900}
+.overlay.active,.headline-overlay.active{display:flex}
+.overlay.active>*,.headline-overlay.active>*{animation:rise .32s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tut-box{background:var(--card);border-radius:var(--r-panel);padding:32px;max-width:560px;width:100%;border:1px solid var(--line-2);max-height:90vh;overflow-y:auto}
+.tut-step{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:12px}
+.tut-box h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2;margin-bottom:16px}
+.tut-box p{font-size:15px;color:var(--text-2);line-height:1.65;margin-bottom:12px}
+.tut-hi{background:var(--raised);border-radius:var(--r-card);padding:16px 20px;margin:16px 0;font-size:14px;line-height:1.65;color:var(--text-2)}
+.tut-nav{display:flex;gap:8px;justify-content:flex-end;margin-top:24px}
 
-/* HEADLINE OVERLAY */
-.headline-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:900;display:none;align-items:center;justify-content:center;padding:1rem}
-.headline-overlay.active{display:flex}
-.hl-card{background:var(--card);border-radius:var(--radius);padding:2rem;max-width:500px;width:100%;border:2px solid var(--gold);text-align:center}
-.hl-paper{font-size:.63rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--gold);margin-bottom:.6rem}
-.hl-text{font-family:'Playfair Display',serif;font-size:1.2rem;line-height:1.5;color:var(--text);margin-bottom:.8rem}
-.hl-stats{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
-.hl-stat{background:var(--card2);border-radius:8px;padding:.5rem .8rem;font-size:.72rem;color:var(--dim);text-align:center}
-.hl-stat span{display:block;font-weight:700;font-size:1rem;color:var(--text)}
-.hl-concept{background:rgba(255,211,61,.08);border:1px solid rgba(255,211,61,.3);border-radius:8px;padding:.7rem 1rem;margin-bottom:1rem;text-align:left}
-.hl-concept .hc-badge{font-size:.65rem;text-transform:uppercase;letter-spacing:.6px;color:var(--gold);margin-bottom:.2rem;font-weight:700}
-.hl-concept .hc-body{font-size:.78rem;color:var(--dim);line-height:1.5}
+/* HEADLINE OVERLAY - the Tribune front page */
+.hl-card{background:var(--paper);color:var(--paper-ink);border-radius:4px;padding:32px 40px 32px;max-width:620px;width:100%;box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.hl-paper{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1;text-align:center;padding:16px 0 12px;border-top:3px double var(--paper-ink);border-bottom:1px solid var(--paper-ink)}
+.hl-date{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--paper-2);padding:8px 0;border-bottom:3px double var(--paper-ink);margin-bottom:24px}
+.hl-text{font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.15;letter-spacing:-.01em;margin-bottom:24px}
+.hl-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--paper-rule);border-bottom:1px solid var(--paper-rule);margin-bottom:24px}
+.hl-stat{padding:12px 0 12px 16px;font-size:13px;color:var(--paper-2);border-left:1px solid var(--paper-rule)}
+.hl-stat:first-child{border-left:none;padding-left:0}
+.hl-stat span{display:block;font-family:var(--mono);font-size:20px;color:var(--paper-ink);margin-bottom:2px}
+.hl-concept{margin-bottom:28px}
+.hl-concept .hc-badge{font-weight:600;font-size:15px;margin-bottom:8px}
+.hl-concept .hc-body{font-size:14px;line-height:1.6;color:#3a352d}
+.hl-concept b{color:var(--paper-ink)}
+.hl-card .btn{background:var(--paper-ink);color:var(--paper);float:none}
+.hl-card .btn:hover{background:#38332b}
+.hl-foot{display:flex;justify-content:flex-end}
 
+/* GAME */
+.game-wrap{padding:0 32px 48px;max-width:1360px;margin:0 auto}
+.top-bar{display:flex;justify-content:space-between;align-items:center;height:64px;border-bottom:1px solid var(--line);margin-bottom:24px;gap:16px}
+.top-bar-left{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.top-bar h2{font-family:var(--serif);font-weight:600;font-size:19px}
+.meta-row{display:flex;gap:8px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.meta-row .meta+.meta::before{content:'·';margin-right:8px}
+.top-actions{display:flex;gap:8px;align-items:center}
 
-/* TOAST */
-.game-wrap{padding:1rem;max-width:1300px;margin:0 auto}
-.top-bar{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid #2a3f52;margin-bottom:.9rem;flex-wrap:wrap;gap:.5rem}
-.top-bar-left{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-.top-bar h2{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--mint);margin:0}
-.badge{border-radius:20px;padding:.28rem .75rem;font-size:.68rem;font-weight:700}
-.badge-purple{background:rgba(167,139,250,.15);color:var(--purple)}
-.badge-gold{background:rgba(255,211,61,.15);color:var(--gold)}
-.badge-solo{background:rgba(108,155,207,.15);color:var(--blue)}
-.badge-friends{background:rgba(78,204,163,.15);color:var(--mint)}
-
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-bottom:.9rem}
-.stat{background:var(--card);border-radius:var(--radius);padding:.9rem;text-align:center;border:1px solid #2a3f52;position:relative;overflow:hidden;cursor:pointer}
-.stat::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.stat.s-cash::after{background:var(--mint)}.stat.s-health::after{background:var(--coral)}.stat.s-staff::after{background:var(--blue)}.stat.s-rep::after{background:var(--gold)}
-.stat .s-lbl{font-size:.57rem;text-transform:uppercase;letter-spacing:.7px;color:var(--dim)}
-.stat .s-val{font-size:1.3rem;font-weight:700;margin-top:.1rem}
-.stat .s-trend{font-size:.6rem;margin-top:.1rem}
-.s-val.good{color:var(--mint)}.s-val.warn{color:var(--gold)}.s-val.bad{color:var(--coral)}
-.stat-tip{display:none;font-size:.68rem;color:var(--dim);margin-top:.3rem;line-height:1.4;border-top:1px solid #2a3f52;padding-top:.3rem}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.stat{background:var(--card);border-radius:var(--r-card);padding:20px;border:1px solid var(--line);cursor:default}
+.s-lbl{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2)}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.dot.good{background:var(--pos)}.dot.warn{background:var(--warn)}.dot.bad{background:var(--neg)}
+.s-val{font-family:var(--mono);font-size:30px;line-height:1.15;margin-top:8px;font-variant-numeric:tabular-nums}
+.s-trend{font-size:12px;color:var(--muted);margin-top:4px}
+.stat-tip{display:none;font-size:13px;color:var(--text-2);margin-top:12px;line-height:1.5;border-top:1px solid var(--line);padding-top:12px}
 .stat:hover .stat-tip{display:block}
 
-/* Payer mix bar */
-.payer-bar-wrap{background:var(--card);border-radius:8px;padding:.6rem .9rem;margin-bottom:.7rem;border:1px solid #2a3f52;display:flex;align-items:center;gap:.8rem}
-.payer-bar-label{font-size:.65rem;color:var(--dim);white-space:nowrap;text-transform:uppercase;letter-spacing:.5px}
-.payer-bar{display:flex;flex:1;height:10px;border-radius:5px;overflow:hidden;gap:1px}
-.pb-ins{background:var(--mint)}.pb-med{background:var(--blue)}.pb-unins{background:var(--coral)}
-.payer-legend{display:flex;gap:.6rem;font-size:.62rem}
-.pl-item{display:flex;align-items:center;gap:.2rem;color:var(--dim)}
-.pl-dot{width:7px;height:7px;border-radius:50%;display:inline-block}
-.margin-chip{background:var(--card2);border-radius:6px;padding:.2rem .5rem;font-size:.65rem;font-weight:700;white-space:nowrap}
-.margin-chip.pos{color:var(--mint)}.margin-chip.neg{color:var(--coral)}
+.payer-bar-wrap{background:var(--card);border-radius:var(--r-card);padding:16px 20px;margin-bottom:12px;border:1px solid var(--line);display:flex;align-items:center;gap:20px}
+.payer-bar-label{font-size:13px;color:var(--text-2);white-space:nowrap}
+.payer-bar{display:flex;flex:1;height:8px;border-radius:4px;overflow:hidden;gap:2px;background:var(--raised)}
+.pb-ins{background:var(--ins)}.pb-med{background:var(--med)}.pb-unins{background:var(--unins)}
+.payer-empty{flex:1;font-size:13px;color:var(--muted)}
+.payer-legend{display:flex;gap:16px;font-size:13px}
+.pl-item{display:flex;align-items:center;gap:6px;color:var(--text-2);white-space:nowrap}
+.pl-item .mono{color:var(--text)}
+.pl-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+.pl-dot.ins{background:var(--ins)}.pl-dot.med{background:var(--med)}.pl-dot.unins{background:var(--unins)}
+.margin-chip{font-family:var(--mono);font-size:13px;white-space:nowrap;padding-left:20px;border-left:1px solid var(--line)}
 
-.board{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.9rem}
-.panel{background:var(--card);border-radius:var(--radius);padding:1.1rem;border:1px solid #2a3f52}
-.panel-title{font-size:.82rem;font-weight:700;margin-bottom:.7rem;display:flex;align-items:center;justify-content:space-between;gap:.4rem;color:var(--text)}
+.qconcept{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;margin:24px 0}
+.qc-hd{font-size:13px;color:var(--muted)}
+.qc-term{font-weight:500;font-size:15px;margin-bottom:4px}
+.qc-def{font-size:14px;color:var(--text-2);line-height:1.55}
 
-/* Concept of the quarter */
-.qconcept{background:linear-gradient(135deg,rgba(255,211,61,.06),rgba(108,155,207,.06));border:1px solid rgba(255,211,61,.25);border-radius:10px;padding:.75rem .9rem;margin-bottom:.7rem}
-.qconcept .qc-hd{font-size:.6rem;text-transform:uppercase;letter-spacing:.7px;color:var(--gold);margin-bottom:.2rem;font-weight:700}
-.qconcept .qc-term{font-weight:700;font-size:.88rem;color:var(--text);margin-bottom:.15rem}
-.qconcept .qc-def{font-size:.73rem;color:var(--dim);line-height:1.45}
+.board{display:grid;grid-template-columns:1.25fr 1fr;gap:12px}
+.board>div{display:flex;flex-direction:column;gap:12px}
+.panel{background:var(--card);border-radius:var(--r-panel);padding:20px;border:1px solid var(--line)}
+.panel-title{font-size:15px;font-weight:500;margin-bottom:16px;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.panel-title .count{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--muted)}
+#patients{display:flex;flex-direction:column;gap:8px}
 
-/* Patient cards */
-.pc{background:var(--card2);border-radius:10px;padding:.85rem;margin-bottom:.5rem;border-left:3px solid var(--blue);transition:all .15s}
-.pc.treated{opacity:.5;border-left-color:var(--mint)}.pc.rejected{opacity:.38;border-left-color:var(--coral)}
-.pc-name{font-weight:700;font-size:.84rem;margin-bottom:.2rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
-.tag{display:inline-block;padding:.1rem .4rem;border-radius:6px;font-size:.6rem;font-weight:700}
-.tag-ins{background:rgba(78,204,163,.18);color:var(--mint)}
-.tag-med{background:rgba(108,155,207,.18);color:var(--blue)}
-.tag-unins{background:rgba(255,107,107,.18);color:var(--coral)}
-.pc-fin{display:flex;gap:.5rem;flex-wrap:wrap;font-size:.69rem;color:var(--dim);margin:.2rem 0 .4rem}
-.net-pos{color:var(--mint);font-weight:700}.net-neg{color:var(--coral);font-weight:700}
-.pc-btns{display:flex;gap:.4rem}
-.pc-done{font-size:.72rem;padding:.2rem 0}
+.pc{background:var(--raised);border-radius:var(--r-card);padding:16px;transition:opacity .2s var(--ease)}
+.pc.treated,.pc.rejected{opacity:.55}
+.pc-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pc-name{font-weight:500;font-size:15px}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-2)}
+.pc-cond{font-size:14px;color:var(--text-2);margin-top:2px}
+.pc-fin{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:13px;color:var(--text-2);margin:12px 0}
+.pc-fin .pos,.pc-fin .neg{font-weight:500}
+.pc-btns{display:flex;gap:8px}
+.pc-done{font-size:13px;margin-top:-4px}
 
-/* Decision */
-.dec-q{font-size:.84rem;font-weight:500;margin-bottom:.6rem;line-height:1.45}
-.dec-opts{display:flex;gap:.4rem;flex-wrap:wrap}
-.dec-opt{flex:1;min-width:110px;padding:.55rem;border-radius:8px;border:1.5px solid #3a4f62;background:transparent;color:var(--text);cursor:pointer;font-size:.72rem;font-family:'DM Sans',sans-serif;transition:all .15s;text-align:left;-webkit-tap-highlight-color:transparent}
-.dec-opt:hover{border-color:var(--mint);background:rgba(78,204,163,.06)}
-.dec-done{font-size:.78rem;color:var(--mint);padding:.3rem 0}
-.d-cost{color:var(--coral);font-size:.64rem;margin-top:.12rem}
-.d-ben{color:var(--mint);font-size:.64rem}
+.dec-q{font-size:16px;margin-bottom:16px;line-height:1.45}
+.dec-opts{display:flex;flex-direction:column;gap:8px}
+.dec-opt{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:12px 16px;border-radius:var(--r-ctl);border:1px solid var(--line-2);background:var(--raised);color:var(--text);cursor:pointer;font-size:14px;font-family:var(--sans);text-align:left;transition:background-color .15s var(--ease),border-color .15s var(--ease);-webkit-tap-highlight-color:transparent}
+.dec-opt:hover{background:var(--raised-2);border-color:var(--accent)}
+.d-cost{font-family:var(--mono);font-size:13px;text-align:right;color:var(--text-2)}
+.d-ben{grid-column:1/-1;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.dec-done{font-size:14px;color:var(--text-2)}
 
-/* Event */
-.ev-card{background:linear-gradient(135deg,#261836,#162436);border-radius:10px;padding:.9rem;border:1px solid #4a3a5a}
-.ev-type{font-size:.58rem;text-transform:uppercase;letter-spacing:.8px;color:var(--purple);margin-bottom:.2rem}
-.ev-title{font-weight:700;font-size:.85rem;margin-bottom:.2rem}
-.ev-desc{font-size:.74rem;color:var(--dim);line-height:1.45}
+.ev-card{background:var(--raised);border-radius:var(--r-card);padding:16px}
+.ev-type{font-size:13px;color:var(--muted);margin-bottom:4px}
+.ev-title{font-weight:500;font-size:15px;margin-bottom:4px}
+.ev-desc{font-size:14px;color:var(--text-2);line-height:1.5}
+.ev-empty{font-size:14px;color:var(--muted)}
 
-/* Activity log */
-.log{max-height:175px;overflow-y:auto;font-size:.69rem;color:var(--dim);line-height:1.5}
-.log::-webkit-scrollbar{width:3px}.log::-webkit-scrollbar-thumb{background:#3a4f62;border-radius:2px}
-.log-e{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.log{max-height:220px;overflow-y:auto;font-family:var(--mono);font-size:12px;color:var(--text-2);line-height:1.5}
+.log::-webkit-scrollbar{width:4px}.log::-webkit-scrollbar-thumb{background:var(--raised-2);border-radius:2px}
+.log-e{padding:8px 0;border-bottom:1px solid var(--line)}
+.log-e:last-child{border-bottom:none}
 
 /* END SCREEN */
-.end-wrap{max-width:680px;margin:0 auto;text-align:center;padding:3rem 1.2rem}
-.end-wrap h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:.5rem}
-.end-clinic{font-size:.82rem;color:var(--dim);margin-bottom:1.2rem}
-.end-scores{display:flex;justify-content:center;gap:1rem;margin:1.2rem 0;flex-wrap:wrap}
-.es-box{background:var(--card);border-radius:var(--radius);padding:1rem 1.4rem;min-width:120px;border:1px solid #2a3f52}
-.es-lbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.7px;color:var(--dim)}
-.es-val{font-size:1.8rem;font-weight:700;margin-top:.1rem}
-.composite-big{margin:1.2rem 0}
-.cb-lbl{font-size:.7rem;color:var(--dim);margin-bottom:.3rem}
-.cb-val{font-size:3rem;font-weight:800;font-family:'Playfair Display',serif;color:var(--blue)}
-.grade-txt{font-size:.88rem;color:var(--dim);max-width:500px;margin:.8rem auto;line-height:1.6}
-.badges-row{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:1rem 0}
-.achv-badge{background:var(--card2);border:1px solid #2a3f52;border-radius:30px;padding:.35rem .9rem;font-size:.72rem;display:flex;align-items:center;gap:.3rem}
-.debrief-box{background:var(--card);border-radius:var(--radius);padding:1.2rem;text-align:left;border:1px solid #2a3f52;margin:1.2rem 0}
-.debrief-box h4{color:var(--mint);margin-bottom:.7rem;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px}
-.db-item{background:var(--card2);border-radius:8px;padding:.65rem .85rem;margin-bottom:.45rem;font-size:.78rem;line-height:1.5}
-.db-concept{color:var(--gold);font-weight:700;font-size:.72rem}
-.db-text{color:var(--dim);margin-top:.12rem}
-.lvlup{background:rgba(78,204,163,.07);border:1px solid var(--mint);border-radius:10px;padding:.9rem;font-size:.82rem;color:var(--mint);margin:1rem 0}
-.end-btns{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem}
+.end-wrap{max-width:720px;margin:0 auto;padding:80px 32px 64px}
+.end-wrap h2{font-family:var(--serif);font-weight:500;font-size:40px;line-height:1.15}
+.end-clinic{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:8px}
+.composite-big{margin:40px 0 0;padding:24px 0;border-top:1px solid var(--line);display:flex;align-items:baseline;justify-content:space-between;gap:24px}
+.cb-lbl{font-size:14px;color:var(--text-2);max-width:18rem}
+.cb-val{font-family:var(--mono);font-size:64px;line-height:1;color:var(--accent)}
+.end-scores{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.es-box{background:var(--card);border-radius:var(--r-card);padding:20px;border:1px solid var(--line)}
+.es-lbl{font-size:13px;color:var(--text-2)}
+.es-val{font-family:var(--mono);font-size:28px;margin-top:8px}
+.grade-txt{font-size:16px;color:var(--text-2);line-height:1.6;margin:32px 0 0}
+.badges-row{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 0}
+.badges-row:empty{display:none}
+.achv-badge{display:inline-flex;align-items:center;gap:8px;background:var(--raised);border:1px solid var(--line);border-radius:var(--r-ctl);padding:6px 12px;font-size:13px;color:var(--text)}
+.achv-badge .ico{color:var(--accent)}
+.debrief-box{margin:48px 0 0}
+.debrief-box h4{font-family:var(--serif);font-weight:500;font-size:24px;margin-bottom:16px}
+.db-item{padding:16px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.6}
+.db-concept{font-weight:500}
+.db-text{color:var(--text-2);margin-top:4px}
+.end-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px}
+.game-footer{border-top:1px solid var(--line);color:var(--muted);text-align:center;padding:24px;font-size:13px}
 
 /* LEADERBOARD */
-.lb-wrap{padding:2rem;max-width:780px;margin:0 auto}
-.lb-wrap h2{font-family:'Playfair Display',serif;color:var(--mint);margin-bottom:.3rem}
-.lb-sub{font-size:.78rem;color:var(--dim);margin-bottom:1rem}
-.lb-tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
-.lb-tab{padding:.38rem 1rem;border-radius:20px;border:1.5px solid #2a3f52;background:transparent;color:var(--dim);cursor:pointer;font-size:.77rem;font-family:'DM Sans',sans-serif;transition:all .2s}
-.lb-tab.active{background:var(--mint);color:#0f1923;border-color:var(--mint);font-weight:700}
-.lb-filter{display:flex;gap:.5rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
-.lb-filter input{background:var(--card2);border:1.5px solid #2a3f52;border-radius:8px;padding:.38rem .8rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.8rem;outline:none;width:140px}
-.lb-filter input:focus{border-color:var(--mint)}
-.lb-section{margin-bottom:1.8rem}
-.lb-diff-header{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:1px solid #2a3f52}
-.lb-table{width:100%;border-collapse:collapse;font-size:.77rem}
-.lb-table th{background:var(--card2);padding:.5rem .45rem;text-align:left;color:var(--mint);font-size:.65rem;text-transform:uppercase;letter-spacing:.5px}
-.lb-table td{padding:.42rem .45rem;border-bottom:1px solid #2a3f52;color:var(--text)}
-.lb-table tr:nth-child(even){background:rgba(255,255,255,.02)}
-.rank-gold{color:var(--gold);font-weight:700}.rank-silver{color:#C0C0C0;font-weight:700}.rank-bronze{color:#CD7F32;font-weight:700}
-.lb-msg{text-align:center;padding:2rem;color:var(--dim);font-size:.82rem}
+.lb-wrap,.impact-wrap{padding:64px 32px 96px;max-width:860px;margin:0 auto}
+.impact-wrap{max-width:960px}
+.lb-sub,.impact-sub{font-size:15px;color:var(--text-2);margin:8px 0 32px}
+.lb-tabs{display:inline-flex;gap:4px;padding:4px;background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:24px}
+.lb-tab{height:32px;padding:0 14px;border-radius:var(--r-sm);border:none;background:transparent;color:var(--text-2);cursor:pointer;font-size:14px;font-family:var(--sans);transition:background-color .15s var(--ease),color .15s var(--ease)}
+.lb-tab:hover{color:var(--text)}
+.lb-tab.active{background:var(--raised-2);color:var(--text);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.lb-filter{display:flex;gap:8px;align-items:center;margin-bottom:24px}
+.lb-filter input{height:36px;background:var(--raised);border:1px solid var(--line-2);border-radius:var(--r-ctl);padding:0 12px;color:var(--text);font-family:var(--mono);font-size:14px;letter-spacing:.15em;outline:none;width:140px}
+.lb-filter input:focus{border-color:var(--accent)}
+.lb-section{margin-bottom:40px}
+.lb-diff-header{font-family:var(--serif);font-size:22px;font-weight:500;margin-bottom:12px}
+.lb-table,.i-table{width:100%;border-collapse:collapse;font-size:14px}
+.lb-table th,.i-table th{padding:8px;text-align:left;color:var(--muted);font-size:13px;font-weight:400;border-bottom:1px solid var(--line-2)}
+.lb-table td,.i-table td{padding:10px 8px;border-bottom:1px solid var(--line);color:var(--text)}
+.lb-table tr:hover td{background:rgba(233,237,242,.02)}
+.lb-table td:nth-child(1),.lb-table td:nth-child(2),.lb-table td:nth-child(5),.lb-table td:nth-child(6),.i-table td:nth-child(3),.i-table td:nth-child(6){font-family:var(--mono);font-variant-numeric:tabular-nums}
+.lb-table th:nth-child(2),.lb-table td:nth-child(2),.lb-table th:nth-child(5),.lb-table td:nth-child(5){text-align:right}
+.lb-table td:nth-child(1){color:var(--muted);width:40px}
+.lb-table td.rank-gold{color:var(--accent)}
+.lb-table td.rank-silver,.lb-table td.rank-bronze{color:var(--text)}
+.dim{color:var(--text-2)!important;font-size:13px}
+.lb-msg{padding:24px 0;color:var(--muted);font-size:14px}
+.lb-back{margin-top:24px}
 
 /* IMPACT */
-.impact-wrap{padding:2rem;max-width:900px;margin:0 auto}
-.impact-wrap h2{font-family:'Playfair Display',serif;color:var(--mint);margin-bottom:.3rem}
-.impact-sub{font-size:.78rem;color:var(--dim);margin-bottom:1.2rem}
-.ig{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.2rem}
-.i-stat{background:var(--card);border-radius:var(--radius);padding:1.1rem;text-align:center;border:1px solid #2a3f52}
-.i-stat .il{font-size:.6rem;text-transform:uppercase;color:var(--dim);letter-spacing:.5px}
-.i-stat .iv{font-size:1.7rem;font-weight:700;color:var(--mint);margin-top:.15rem}
-.i-stat .is{font-size:.62rem;color:var(--dim);margin-top:.1rem}
-.i-table-wrap{background:var(--card);border-radius:var(--radius);padding:1.1rem;border:1px solid #2a3f52;overflow-x:auto;margin-bottom:1rem}
-.i-table-wrap h3{font-size:.82rem;margin-bottom:.7rem}
-.i-table{width:100%;border-collapse:collapse;font-size:.73rem}
-.i-table th{background:var(--card2);padding:.38rem .45rem;text-align:left;color:var(--mint);font-size:.62rem;text-transform:uppercase}
-.i-table td{padding:.38rem .45rem;border-bottom:1px solid #2a3f52;color:var(--dim)}
-.cbar{background:var(--card2);border-radius:4px;height:6px;flex:1}
-.cfill{background:linear-gradient(90deg,var(--mint),var(--blue));border-radius:4px;height:6px;transition:width .5s}
-.export-row{margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap}
-
-/* FOOTER */
-.game-footer{background:#1a2430;color:#3a5060;text-align:center;padding:.8rem;font-size:.68rem;margin-top:2rem}
+.ig{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
+.i-stat{background:var(--card);border-radius:var(--r-card);padding:20px;border:1px solid var(--line)}
+.i-stat .il{font-size:13px;color:var(--text-2)}
+.i-stat .iv{font-family:var(--mono);font-size:28px;margin-top:8px}
+.i-stat .is{font-size:12px;color:var(--muted);margin-top:4px}
+.i-table-wrap{background:var(--card);border-radius:var(--r-panel);padding:20px;border:1px solid var(--line);overflow-x:auto;margin-bottom:12px}
+.i-table-wrap h3{font-size:15px;font-weight:500;margin-bottom:16px}
+.i-table td{color:var(--text-2)}
+.cbar{background:var(--raised);border-radius:3px;height:6px;flex:1}
+.cfill{background:var(--accent);border-radius:3px;height:6px;transition:width .5s var(--ease)}
+.export-row{margin-top:24px;display:flex;gap:8px}
 
 /* TOAST */
-.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card);border:1px solid var(--mint);border-radius:10px;padding:.65rem 1.3rem;font-size:.8rem;color:var(--text);z-index:9999;transition:transform .3s;white-space:nowrap;max-width:90vw}
-.toast.show{transform:translateX(-50%) translateY(0)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--raised-2);border:1px solid var(--line-2);border-radius:10px;padding:12px 20px;font-size:14px;color:var(--text);z-index:9999;transition:transform .3s var(--ease),opacity .3s var(--ease);white-space:nowrap;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
+/* LOAD */
+#screen1.active .hero>*{animation:rise .5s var(--ease) both}
+#screen1.active .hero>*:nth-child(2){animation-delay:.06s}
+
+/* TABLET */
+@media(max-width:1020px){
+  .hero{grid-template-columns:1fr;gap:48px;min-height:0;padding-top:64px}
+  .hero h1{font-size:52px}
+  .steps{grid-template-columns:1fr 1fr;gap:32px 24px}
+  .glossary{grid-template-columns:1fr}
+  .board{grid-template-columns:1fr}
+  .payer-bar-wrap{flex-wrap:wrap}
+  .payer-bar-wrap{row-gap:12px}
+  .payer-bar{flex-basis:100%;order:1}
+  .payer-legend,.payer-empty{order:2}
+  .margin-chip{order:3;margin-left:auto}
+}
 /* MOBILE */
 @media(max-width:700px){
   input,select,textarea{font-size:16px!important}
-  .btn{padding:.85rem 1.6rem;font-size:.95rem;min-height:44px}
-  .btn-sm{padding:.6rem 1rem;font-size:.82rem;min-height:40px}
-  .s1-inner h1{font-size:2.2rem}
-  .hiw-grid{grid-template-columns:1fr 1fr;gap:.7rem}
-  .concepts-strip{grid-template-columns:1fr 1fr;gap:.5rem}
-  .s1-btns{flex-direction:column;align-items:stretch}
-  .s1-btns .btn{text-align:center}
-  .s2-wrap{padding:1.2rem}
-  .mode-grid{grid-template-columns:1fr 1fr}
+  .wrap{padding:0 16px}
+  .hero{padding-top:48px;padding-bottom:64px;gap:40px}
+  .hero h1{font-size:38px}
+  .lede{font-size:17px}
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn{width:100%}
+  .preview{padding:16px}
+  .pv-figs{grid-template-columns:1fr;gap:16px}
+  .pv-patients .pc:nth-child(2){display:none}
+  .section{padding-top:64px}
+  .section:last-of-type{padding-bottom:80px}
+  .sec-h{font-size:26px;margin-bottom:24px}
+  .steps{grid-template-columns:1fr;gap:24px}
+  .gl-row{grid-template-columns:1fr;gap:4px}
+  .s2-wrap{padding:40px 16px 64px}
+  .s2-inner h2,.page-h{font-size:30px}
   .diff-grid{grid-template-columns:1fr}
-  .s2-btns{flex-direction:column}
-  .s2-btns .btn{text-align:center}
-  .stats-row{grid-template-columns:1fr 1fr;gap:.5rem}
-  .stat .s-val{font-size:1.1rem}
-  .board{grid-template-columns:1fr}
-  .pc-btns .btn{flex:1;text-align:center;min-height:44px}
-  .dec-opts{flex-direction:column}
-  .dec-opt{min-width:100%;min-height:48px}
-  .end-wrap{padding:2rem .8rem}
-  .end-wrap h2{font-size:1.6rem}
-  .cb-val{font-size:2.4rem}
-  .lb-wrap,.impact-wrap{padding:1rem}
-  .ig{grid-template-columns:1fr 1fr;gap:.6rem}
-  .tut-nav{flex-direction:column}
-  .tut-nav .btn{width:100%;text-align:center}
-  .payer-legend{display:none}
+  .s2-btns{flex-direction:column-reverse}
+  .s2-btns .btn{width:100%}
+  .game-wrap{padding:0 16px 32px}
+  .meta-row{display:none}
+  .stats-row{grid-template-columns:1fr 1fr;gap:8px}
+  .stat{padding:16px}
+  .s-val{font-size:24px}
+  .payer-legend{gap:12px;font-size:12px}
+  .margin-chip{border-left:none;padding-left:0}
+  .qconcept{grid-template-columns:1fr;gap:4px}
+  .pc-btns .btn{flex:1;height:44px}
+  .dec-opt{min-height:48px}
+  .end-wrap{padding:48px 16px}
+  .end-wrap h2{font-size:32px}
+  .composite-big{flex-direction:column;gap:8px}
+  .cb-val{font-size:52px}
+  .end-scores{grid-template-columns:1fr}
+  .lb-wrap,.impact-wrap{padding:40px 16px 64px}
+  .ig{grid-template-columns:1fr 1fr;gap:8px}
+  .tut-box{padding:24px}
+  .tut-nav .btn{flex:1}
+  .hl-card{padding:24px 20px}
+  .hl-paper{font-size:26px}
+  .hl-text{font-size:24px}
+  .hl-stats{grid-template-columns:1fr 1fr}
+  .hl-stat:nth-child(3){border-left:none;padding-left:0}
+  .hl-stat:nth-child(n+3){border-top:1px solid var(--paper-rule)}
 }
 @media(max-width:400px){
-  .s1-inner h1{font-size:1.9rem}
-  .hiw-grid{grid-template-columns:1fr}
   .mode-grid{grid-template-columns:1fr}
 }
 @supports(padding:max(0px)){
-  .game-wrap{padding-bottom:max(1rem,env(safe-area-inset-bottom))}
-  .s1-wrap{padding-bottom:max(2rem,env(safe-area-inset-bottom))}
+  .game-wrap{padding-bottom:max(32px,env(safe-area-inset-bottom))}
 }
 @media(hover:none){
-  .btn:active{transform:scale(.97);opacity:.88}
-  .pc:active{background:rgba(78,204,163,.07)}
-  .dec-opt:active{background:rgba(78,204,163,.12);border-color:var(--mint)}
   .stat-tip{display:none!important}
 }
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
 </style>
-</head><!-- Google tag (gtag.js) -->
+</head>
+<body>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-KMET0FZXL7"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -331,8 +393,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
   gtag('config', 'G-KMET0FZXL7');
 </script>
-<body>
-
 <!-- SUPABASE CONFIG-->
 <script>
 const SUPABASE_URL = 'https://beveheokifcqabdkzbzv.supabase.co';
@@ -394,95 +454,146 @@ async function dbStats() {
 }
 </script>
 
-<!--SCREEN 1 — LANDING (About the Game)-->
+<!-- SCREEN 1 — LANDING (About the Game)-->
 <div class="screen active" id="screen1">
-<div class="s1-wrap">
-<div class="s1-inner">
-  <div class="s1-pill">Healthcare Finance Simulation</div>
-  <h1>Vitals &amp; Ventures</h1>
-  <p class="s1-tagline">Play as the director of a community health clinic.<br>
-    Treat patients, manage your budget, and balance <strong style="color:var(--mint)">mission</strong> and <strong style="color:var(--gold)">margin</strong>.<br>
-    Dive into the complexity of healthcare finance.
-  </p>
-
-  <div class="s1-btns">
-    <button class="btn btn-gold" onclick="startTutorial()">How to Play</button>
-    <button class="btn btn-mint" onclick="showScreen('screen2')">Let's Play</button>
-    <button class="btn btn-out" onclick="gotoLB()">Leaderboard</button>
+<header class="site-nav">
+  <div class="wrap nav-in">
+    <span class="wordmark">Vitals &amp; Ventures</span>
+    <button class="link" onclick="gotoLB()">Leaderboard</button>
   </div>
+</header>
 
-  <div class="hiw-grid">
-    <div class="hiw-card">
-      <div class="hc-title">Treat Patients</div>
-      <div class="hc-desc">Every quarter, patients arrive with different insurance statuses. Insured is profitable, and uninsured is unprofitable (but maximum community impact). Same treatment, but one is more sustainable</div>
-    </div>
-    <div class="hiw-card">
-      <div class="hc-title">Manage the Budget</div>
-      <div class="hc-desc">Pay staff, handle events, make investments. Every dollar you spend is a dollar you can't spend elsewhere (<em>opportunity cost</em>).</div>
-    </div>
-    <div class="hiw-card">
-      <div class="hc-title">Handle Surprises</div>
-      <div class="hc-desc">Flu surges, equipment failures, Medicaid rate cuts, natural disasters, etc. Healthcare finance is unpredictable, so your <em>cash reserve</em> is your protection.</div>
-    </div>
-    <div class="hiw-card">
-      <div class="hc-title">Balance the Score</div>
-      <div class="hc-desc">The composite score is made up of 40% Financials + 40% Community Health + 20% Reputation. Only maximizing one aspect leads to failure. <em>Balance</em> is the goal.</div>
+<section class="hero wrap">
+  <div class="hero-copy">
+    <p class="eyebrow">A healthcare finance simulation</p>
+    <h1>Run a community health clinic. Balance mission and margin.</h1>
+    <p class="lede">Play as the clinic's director for four to eight quarters. Treat patients, pay staff, weather surprises and see the finance behind every decision.</p>
+    <div class="hero-actions">
+      <button class="btn btn-mint" onclick="showScreen('screen2')">Start a clinic</button>
+      <button class="btn btn-out" onclick="startTutorial()">How to play</button>
     </div>
   </div>
 
-  <p style="font-size:.78rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.6px;text-align:left;margin-bottom:.6rem">Finance Concepts Built Into Every Decision</p>
-  <div class="concepts-strip">
-    <div class="cstrip-item"><div class="ci-term">Payer Mix</div><div class="ci-def">The ratio of insured vs. Medicaid vs. uninsured patients, controlling revenue.</div></div>
-    <div class="cstrip-item"><div class="ci-term">Operating Margin</div><div class="ci-def">Revenue minus total costs per quarter. Negative means cash is being burned through too quickly.</div></div>
-    <div class="cstrip-item"><div class="ci-term">Opportunity Cost</div><div class="ci-def">Choosing one thing means giving up another. Every hire is equipment you can't buy.</div></div>
-    <div class="cstrip-item"><div class="ci-term">Cash Runway</div><div class="ci-def">How many quarters until you run out of cash at your current burn rate.</div></div>
-    <div class="cstrip-item"><div class="ci-term">Cross-Subsidy</div><div class="ci-def">Profits from insured patients help to fund care for uninsured ones, ensuring balance.</div></div>
-    <div class="cstrip-item"><div class="ci-term">Revenue Diversification</div><div class="ci-def">Grants, insurance, and Medicaid are three income streams. Lose one and the others have to compensate.</div></div>
+  <div class="preview" aria-hidden="true">
+    <div class="pv-top">
+      <span class="pv-name">Eastside Community Clinic</span>
+      <span class="pv-meta mono">Resident · Q3 of 6</span>
+    </div>
+    <div class="pv-figs">
+      <div>
+        <div class="pv-lbl">Cash balance</div>
+        <div class="pv-cash mono">$61,850</div>
+        <div class="pv-sub mono">Runway about 6 quarters</div>
+      </div>
+      <div class="pv-mini">
+        <div><span>Community health</span><span class="mono">64/100</span></div>
+        <div><span>Reputation</span><span class="mono">58/100</span></div>
+        <div><span>Staff</span><span class="mono">3</span></div>
+      </div>
+    </div>
+    <div class="pv-mix">
+      <div class="pv-lbl">Payer mix</div>
+      <div class="payer-bar"><div class="pb-ins" style="flex:50"></div><div class="pb-med" style="flex:30"></div><div class="pb-unins" style="flex:20"></div></div>
+      <div class="pv-legend">
+        <span class="pl-item"><span class="pl-dot ins"></span>Insured <span class="mono">50%</span></span>
+        <span class="pl-item"><span class="pl-dot med"></span>Medicaid <span class="mono">30%</span></span>
+        <span class="pl-item"><span class="pl-dot unins"></span>Uninsured <span class="mono">20%</span></span>
+      </div>
+    </div>
+    <div class="pv-patients">
+      <div class="pc">
+        <div class="pc-head"><span class="pc-name">Maria G.</span><span class="tag"><span class="pl-dot ins"></span>Insured</span></div>
+        <div class="pc-cond">Diabetes management</div>
+        <div class="pc-fin"><span>Cost $600</span><span>Reimb $1,400</span><span class="pos">Net +$800</span><span>+3 health</span></div>
+        <div class="pc-btns"><span class="btn btn-sm btn-mint">Treat</span><span class="btn btn-sm btn-out">Turn away</span></div>
+      </div>
+      <div class="pc">
+        <div class="pc-head"><span class="pc-name">Rosa L.</span><span class="tag"><span class="pl-dot unins"></span>Uninsured</span></div>
+        <div class="pc-cond">Asthma emergency</div>
+        <div class="pc-fin"><span>Cost $900</span><span>Reimb $0</span><span class="neg">Net −$900</span><span>+5 health</span></div>
+      </div>
+    </div>
   </div>
+</section>
 
-</div>
-</div>
+<section class="wrap section">
+  <h2 class="sec-h">How a quarter works</h2>
+  <ol class="steps">
+    <li>
+      <div class="step-n">1</div>
+      <div class="step-t">Treat patients</div>
+      <p class="step-d">Every quarter, patients arrive with different insurance. Insured care is profitable, uninsured care loses money but has the most community impact. Same treatment, very different finances.</p>
+    </li>
+    <li>
+      <div class="step-n">2</div>
+      <div class="step-t">Manage the budget</div>
+      <p class="step-d">Pay staff, handle events and make investments. Every dollar you spend is a dollar you can't spend elsewhere, which is opportunity cost.</p>
+    </li>
+    <li>
+      <div class="step-n">3</div>
+      <div class="step-t">Handle surprises</div>
+      <p class="step-d">Flu surges, equipment failures, Medicaid rate cuts and storms. Healthcare finance is unpredictable, so your cash reserve is your protection.</p>
+    </li>
+    <li>
+      <div class="step-n">4</div>
+      <div class="step-t">Balance the score</div>
+      <p class="step-d">The composite score is 40% financials, 40% community health and 20% reputation. Maximizing only one leads to failure.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="wrap section">
+  <h2 class="sec-h">Finance concepts built into every decision</h2>
+  <dl class="glossary">
+    <div class="gl-row"><dt>Payer mix</dt><dd>The ratio of insured, Medicaid and uninsured patients, which controls revenue.</dd></div>
+    <div class="gl-row"><dt>Cash runway</dt><dd>How many quarters until you run out of cash at your current burn rate.</dd></div>
+    <div class="gl-row"><dt>Operating margin</dt><dd>Revenue minus total costs per quarter. Negative means cash is being burned too quickly.</dd></div>
+    <div class="gl-row"><dt>Cross-subsidy</dt><dd>Profits from insured patients help fund care for uninsured ones.</dd></div>
+    <div class="gl-row"><dt>Opportunity cost</dt><dd>Choosing one thing means giving up another. Every hire is equipment you can't buy.</dd></div>
+    <div class="gl-row"><dt>Revenue diversification</dt><dd>Grants, insurance and Medicaid are three income streams. Lose one and the others have to compensate.</dd></div>
+  </dl>
+</section>
 </div>
 
 <!-- SCREEN 2 — SETUP (Mode, Difficulty, Name)-->
 <div class="screen" id="screen2">
 <div class="s2-wrap">
 <div class="s2-inner">
-  <h2>Set Up Your Clinic</h2>
-  <p class="s2-sub">Name your clinic, pick your mode, and choose how hard you want it to be.</p>
+  <h2>Set up your clinic</h2>
+  <p class="s2-sub">Name your clinic, pick a mode and choose how hard you want it to be.</p>
 
   <div class="setup-section">
-    <div class="setup-label">Your Name</div>
-    <input type="text" class="field-input" id="playerNameInput" placeholder="e.g. Alex or Dr. Rivera" maxlength="24" autocomplete="off">
+    <label class="setup-label" for="playerNameInput">Your name</label>
+    <input type="text" class="field-input" id="playerNameInput" placeholder="Alex or Dr. Rivera" maxlength="24" autocomplete="off">
   </div>
 
   <div class="setup-section">
-    <div class="setup-label">Clinic Name</div>
-    <input type="text" class="field-input" id="clinicNameInput" placeholder="e.g. M.D. Anderson" maxlength="38" autocomplete="off">
+    <label class="setup-label" for="clinicNameInput">Clinic name</label>
+    <input type="text" class="field-input" id="clinicNameInput" placeholder="Eastside Community Clinic" maxlength="38" autocomplete="off">
   </div>
 
   <div class="setup-section">
-    <div class="setup-label">Play Mode</div>
+    <div class="setup-label">Play mode</div>
     <div class="mode-grid">
       <div class="mode-card sel" id="mc-solo" onclick="selectMode('solo',this)">
-        <div class="mc-title">Solo Mode</div>
-        <div class="mc-desc">Play solo. Compete with the leaderboard</div>
+        <div class="mc-title">Solo</div>
+        <div class="mc-desc">Play on your own and compete on the global leaderboard.</div>
       </div>
       <div class="mode-card" id="mc-friends" onclick="selectMode('friends',this)">
-        <div class="mc-title">Friends Mode</div>
+        <div class="mc-title">Friends</div>
         <div class="mc-desc">Share a room code and compete on a live friends leaderboard.</div>
       </div>
     </div>
-    <div id="warnBox" class="warn-box" style="display:none">Friends Mode needs Supabase configured. See setup guide, or play in Solo Mode.</div>
+    <div id="warnBox" class="warn-box" style="display:none">Friends mode needs Supabase configured. See the setup guide, or play solo.</div>
   </div>
 
   <div id="roomSection" style="display:none" class="setup-section">
-    <div class="setup-label">Room Code</div>
+    <label class="setup-label" for="roomCodeInput">Room code</label>
     <div class="field-row">
-      <input type="text" class="field-input" id="roomCodeInput" placeholder="XXXX" maxlength="6" style="letter-spacing:3px;font-weight:700;font-size:1.1rem" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')">
-      <button class="btn btn-sm btn-out" onclick="genRoom()">Generate</button>
+      <input type="text" class="field-input" id="roomCodeInput" placeholder="XXXX" maxlength="6" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')">
+      <button class="btn btn-out" onclick="genRoom()">Generate</button>
     </div>
-    <div class="room-hint">Same code, same leaderboard. Share with friends or type their code to join their room.</div>
+    <div class="room-hint">Same code, same leaderboard. Share yours with friends or type theirs to join their room.</div>
   </div>
 
   <div class="setup-section">
@@ -490,22 +601,22 @@ async function dbStats() {
     <div class="diff-grid">
       <div class="diff-card sel" id="dc-0" onclick="setDiff(0,this)">
         <div class="dc-label">Intern</div>
-        <div class="dc-sub">$80K start - 4 quarters - gentle events</div>
+        <div class="dc-sub">$80K · 4 quarters · gentle events</div>
       </div>
       <div class="diff-card" id="dc-1" onclick="setDiff(1,this)">
         <div class="dc-label">Resident</div>
-        <div class="dc-sub">$70K start - 6 quarters - standard events</div>
+        <div class="dc-sub">$70K · 6 quarters · standard events</div>
       </div>
       <div class="diff-card" id="dc-2" onclick="setDiff(2,this)">
         <div class="dc-label">Attending</div>
-        <div class="dc-sub">$60K start - 8 quarters - demanding events</div>
+        <div class="dc-sub">$60K · 8 quarters · demanding events</div>
       </div>
     </div>
   </div>
 
   <div class="s2-btns">
-    <button class="btn btn-out" onclick="showScreen('screen1')">← Back</button>
-    <button class="btn btn-mint" onclick="confirmSetup()">▶ Start Game</button>
+    <button class="btn btn-out" onclick="showScreen('screen1')"><svg class="ico" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Back</button>
+    <button class="btn btn-mint" onclick="confirmSetup()">Start game</button>
   </div>
 </div>
 </div>
@@ -520,10 +631,11 @@ async function dbStats() {
 <div class="headline-overlay" id="hlOverlay">
 <div class="hl-card">
   <div class="hl-paper">Community Health Tribune</div>
+  <div class="hl-date"><span id="hlDate"></span><span>Quarterly edition</span></div>
   <div class="hl-text" id="hlText"></div>
   <div class="hl-stats" id="hlStats"></div>
   <div class="hl-concept" id="hlConcept"></div>
-  <button class="btn btn-mint btn-sm" onclick="closeHeadline()">Next Quarter →</button>
+  <div class="hl-foot"><button class="btn btn-sm" onclick="closeHeadline()">Next quarter<svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button></div>
 </div>
 </div>
 
@@ -533,13 +645,15 @@ async function dbStats() {
   <div class="top-bar">
     <div class="top-bar-left">
       <h2>Vitals &amp; Ventures</h2>
-      <div class="badge badge-purple" id="lvlBadge"></div>
-      <div class="badge badge-gold" id="qBadge"></div>
-      <div class="badge" id="modeBadge"></div>
+      <div class="meta-row">
+        <span class="meta" id="lvlBadge"></span>
+        <span class="meta" id="qBadge"></span>
+        <span class="meta" id="modeBadge"></span>
+      </div>
     </div>
-    <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap">
-      <button class="btn btn-sm btn-mint" id="nextBtn" onclick="nextQuarter()">End Quarter →</button>
-      <button class="btn btn-sm btn-out" onclick="if(confirm('Quit? Progress will be lost.'))showScreen('screen1')">✕</button>
+    <div class="top-actions">
+      <button class="btn btn-sm btn-mint" id="nextBtn" onclick="nextQuarter()">End quarter</button>
+      <button class="btn btn-sm btn-ghost btn-icon" aria-label="Quit game" title="Quit game" onclick="if(confirm('Quit? Progress will be lost.'))showScreen('screen1')"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
     </div>
   </div>
 
@@ -551,21 +665,21 @@ async function dbStats() {
   <div class="board">
     <div>
       <div class="panel">
-        <div class="panel-title">Incoming Patients <span id="patientCount" style="font-size:.65rem;color:var(--dim);font-weight:400"></span></div>
+        <div class="panel-title">Incoming patients <span id="patientCount" class="count"></span></div>
         <div id="patients"></div>
       </div>
-      <div class="panel" style="margin-top:.8rem">
-        <div class="panel-title">Quarter Event</div>
+      <div class="panel">
+        <div class="panel-title">Quarter event</div>
         <div id="event"></div>
       </div>
     </div>
     <div>
       <div class="panel">
-        <div class="panel-title">Strategic Decision</div>
+        <div class="panel-title">Strategic decision</div>
         <div id="decisions"></div>
       </div>
-      <div class="panel" style="margin-top:.8rem">
-        <div class="panel-title">Activity Log</div>
+      <div class="panel">
+        <div class="panel-title">Activity log</div>
         <div class="log" id="log"></div>
       </div>
     </div>
@@ -576,50 +690,50 @@ async function dbStats() {
 <!-- END SCREEN-->
 <div class="screen" id="endScreen">
 <div class="end-wrap">
-  <h2>Clinic Report Card</h2>
+  <h2>Clinic report card</h2>
   <div class="end-clinic" id="endClinic"></div>
-  <div class="end-scores">
-    <div class="es-box"><div class="es-lbl">Final Cash</div><div class="es-val" id="esCash" style="color:var(--mint)"></div></div>
-    <div class="es-box"><div class="es-lbl">Community Health</div><div class="es-val" id="esHealth" style="color:var(--coral)"></div></div>
-    <div class="es-box"><div class="es-lbl">Reputation</div><div class="es-val" id="esRep" style="color:var(--gold)"></div></div>
-  </div>
   <div class="composite-big">
-    <div class="cb-lbl">COMPOSITE SCORE - Financial 40% + Health 40% + Reputation 20%</div>
+    <div class="cb-lbl">Composite score, weighted 40% financial, 40% community health and 20% reputation</div>
     <div class="cb-val" id="esComp"></div>
+  </div>
+  <div class="end-scores">
+    <div class="es-box"><div class="es-lbl">Final cash</div><div class="es-val" id="esCash"></div></div>
+    <div class="es-box"><div class="es-lbl">Community health</div><div class="es-val" id="esHealth"></div></div>
+    <div class="es-box"><div class="es-lbl">Reputation</div><div class="es-val" id="esRep"></div></div>
   </div>
   <div class="grade-txt" id="esGrade"></div>
   <div id="lvlupMsg"></div>
   <div class="badges-row" id="achvBadges"></div>
   <div class="debrief-box">
-    <h4>What Your Decisions Taught You</h4>
+    <h4>What your decisions taught you</h4>
     <div id="debriefItems"></div>
   </div>
   <div class="end-btns">
-    <button class="btn btn-mint" onclick="showScreen('screen2')">Play Again</button>
+    <button class="btn btn-mint" onclick="showScreen('screen2')">Play again</button>
     <button class="btn btn-out" onclick="gotoLB()">Leaderboard</button>
-    <button class="btn btn-out" onclick="showScreen('screen1')">Home</button>
+    <button class="btn btn-ghost" onclick="showScreen('screen1')">Home</button>
   </div>
 </div>
-<div class="game-footer">Vitals &amp; Ventures - Educational Healthcare Finance Simulation © 2026</div>
+<div class="game-footer">Vitals &amp; Ventures · Educational healthcare finance simulation · © 2026</div>
 </div>
 
 <!-- LEADERBOARD-->
 <div class="screen" id="lbScreen">
 <div class="lb-wrap">
-  <h2>Leaderboard</h2>
+  <h2 class="page-h">Leaderboard</h2>
   <div class="lb-sub" id="lbSub">Top scores</div>
   <div class="lb-tabs">
     <button class="lb-tab active" id="lbt-global" onclick="switchLbTab('global',this)">Global</button>
-    <button class="lb-tab" id="lbt-room" onclick="switchLbTab('room',this)" style="display:none">My Room</button>
-    <button class="lb-tab" id="lbt-local" onclick="switchLbTab('local',this)">This Device</button>
+    <button class="lb-tab" id="lbt-room" onclick="switchLbTab('room',this)" style="display:none">My room</button>
+    <button class="lb-tab" id="lbt-local" onclick="switchLbTab('local',this)">This device</button>
   </div>
   <div id="lbRoomFilter" style="display:none" class="lb-filter">
     <input type="text" id="lbRoomInput" placeholder="Room code" maxlength="6" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')">
-    <button class="btn btn-sm btn-mint" onclick="loadLB()">Load</button>
+    <button class="btn btn-sm btn-out" onclick="loadLB()">Load</button>
   </div>
   <div id="lbContent"><div class="lb-msg">Loading…</div></div>
-  <div style="margin-top:1.5rem;text-align:center">
-    <button class="btn btn-out" onclick="showScreen('screen1')">← Home</button>
+  <div class="lb-back">
+    <button class="btn btn-out" onclick="showScreen('screen1')"><svg class="ico" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Home</button>
   </div>
 </div>
 </div>
@@ -627,15 +741,15 @@ async function dbStats() {
 <!-- IMPACT DASHBOARD-->
 <div class="screen" id="impactScreen">
 <div class="impact-wrap">
-  <h2>Impact Dashboard</h2>
+  <h2 class="page-h">Impact dashboard</h2>
   <div class="impact-sub">Educational reach and outcomes across all players.</div>
-  <div class="ig" id="impactStats"><div style="color:var(--dim);grid-column:1/-1;text-align:center;padding:1rem">Loading…</div></div>
-  <div class="i-table-wrap" style="margin-bottom:1rem"><h3>Score Distribution</h3><div id="scoreDist"></div></div>
-  <div class="i-table-wrap" style="margin-bottom:1rem"><h3>Difficulty Breakdown</h3><div id="diffBreak"></div></div>
-  <div class="i-table-wrap"><h3>Recent Sessions</h3><div id="recentSess"></div></div>
+  <div class="ig" id="impactStats"><div style="color:var(--muted);grid-column:1/-1;padding:16px 0">Loading…</div></div>
+  <div class="i-table-wrap"><h3>Score distribution</h3><div id="scoreDist"></div></div>
+  <div class="i-table-wrap"><h3>Difficulty breakdown</h3><div id="diffBreak"></div></div>
+  <div class="i-table-wrap"><h3>Recent sessions</h3><div id="recentSess"></div></div>
   <div class="export-row">
     <button class="btn btn-sm btn-out" onclick="exportCSV()">Export CSV</button>
-    <button class="btn btn-sm btn-out" onclick="showScreen('screen1')">← Back</button>
+    <button class="btn btn-sm btn-ghost" onclick="showScreen('screen1')">Back</button>
   </div>
 </div>
 </div>
@@ -647,6 +761,12 @@ async function dbStats() {
 <script>
 
 'use strict';
+
+// Ledger figures: every negative amount gets a real minus sign
+function money(n){ return (n<0?"\u2212":"")+"$"+Math.abs(n).toLocaleString(); }
+function smoney(n){ return (n>0?"+":n<0?"\u2212":"")+"$"+Math.abs(n).toLocaleString(); }
+function sgn(n){ return n>0?"pos":n<0?"neg":""; }
+var ICON_AWARD = "<svg class=\"ico\" viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"8\" r=\"6\"/><path d=\"M15.48 12.89 17 21.42a.5.5 0 0 1-.81.47l-3.58-2.69a1 1 0 0 0-1.2 0l-3.58 2.69a.5.5 0 0 1-.81-.47l1.51-8.53\"/></svg>";
 
 // STATE
 var selMode = 'solo';
@@ -795,15 +915,15 @@ var DECISIONS = [
 
 // ── TUTORIAL ──
 var TUT = [
-  {title:"Welcome to Vitals and Ventures",
+  {title:"Welcome to Vitals & Ventures",
    body:"<p>You run a community health clinic. The goal is not just to make money and not just to help everyone. It is both, simultaneously.</p><p>That tension is what real healthcare finance feels like every day.</p>"},
-  {title:"Your Four Dashboard Metrics",
+  {title:"Your four dashboard metrics",
    body:"<div class=\"tut-hi\"> <b>Cash Balance</b> - Hits zero and the clinic closes. This is your hard constraint.<br><br> <b>Community Health</b> - Rises when you treat patients, falls when you turn them away.<br><br><b>Staff</b> - Each staff member costs a fixed amount every quarter regardless of patient volume. That is a fixed cost.<br><br> <b>Reputation</b> - Affects grant eligibility and quality bonus payments.</div>"},
-  {title:"The Insurance Tier System",
+  {title:"The insurance tier system",
    body:"<p>Same patient, same treatment. Three completely different financial outcomes:</p><div class=\"tut-hi\"> <b>Insured</b> - Reimbursement exceeds your cost. Treating this patient is profitable.<br><br> <b>Medicaid</b> - Reimbursement covers about 60% of cost. You take a modest loss but serve the community.<br><br> <b>Uninsured</b> - Zero reimbursement. Full cost to you. Maximum community impact, maximum financial strain.</div><p>This is not a game abstraction. U.S. community health centers navigate this every single day.</p>"},
-  {title:"Events, Decisions and Concepts",
-   body:"<p>Each quarter brings a <b>random event</b>: flu surge, grant, equipment failure, staff burnout, plus one <b>strategic decision</b>. Both require financial thinking, not just immediate reactions.</p><p>You will also see a <b>Finance Concept of the Quarter</b> before each round, and concept tips appear as you act. These connect your decisions to financial vocabulary.</p>"},
-  {title:"The Composite Score",
+  {title:"Events, decisions and concepts",
+   body:"<p>Each quarter brings a <b>random event</b>: flu surge, grant, equipment failure, staff burnout, plus one <b>strategic decision</b>. Both require financial thinking, not just immediate reactions.</p><p>You will also see a <b>finance concept of the quarter</b> before each round, and concept tips appear as you act. These connect your decisions to financial vocabulary.</p>"},
+  {title:"The composite score",
    body:"<div class=\"tut-hi\">Composite = 40% Financial + 40% Community Health + 20% Reputation</div><p>This formula is the lesson of the game. Reject every uninsured patient? Community Health falls. Treat everyone regardless of cost? You go bankrupt.</p><p>The only method to a high score is balance. This is how every community health center in America must operate.</p>"},
 ];
 var tutIdx = 0;
@@ -818,7 +938,7 @@ function renderTut() {
   var isLast = tutIdx === TUT.length - 1;
   var prev = tutIdx > 0 ? "<button class=\"btn btn-sm btn-out\" onclick=\"tutIdx--;renderTut()\">Back</button>" : "";
   var next = isLast
-    ? "<button class=\"btn btn-sm btn-mint\" onclick=\"document.getElementById('tutOverlay').classList.remove('active')\">Got It</button>"
+    ? "<button class=\"btn btn-sm btn-mint\" onclick=\"document.getElementById('tutOverlay').classList.remove('active')\">Got it</button>"
     : "<button class=\"btn btn-sm btn-mint\" onclick=\"tutIdx++;renderTut()\">Next</button>";
   document.getElementById("tutBox").innerHTML =
     "<div class=\"tut-step\">Step " + (tutIdx+1) + " of " + TUT.length + "</div>" +
@@ -867,7 +987,7 @@ function confirmSetup() {
   if (selMode === "friends") {
     var rc = document.getElementById("roomCodeInput").value.trim().toUpperCase();
     if (!rc || rc.length < 4) { showToast("Please enter a valid room code"); return; }
-    if (!SUPABASE_READY) { selMode = "solo"; showToast("Supabase not configured — switched to Solo Mode"); }
+    if (!SUPABASE_READY) { selMode = "solo"; showToast("Supabase is not configured, switched to solo mode"); }
     else roomCode = rc;
   }
   startGame();
@@ -889,15 +1009,14 @@ function startGame() {
   qCosts = 0;
 
   // Difficulty label badges (emoji-free to avoid encoding issues)
-  var diffEmojis = [" "," "," "];
-  document.getElementById("lvlBadge").textContent = diffEmojis[selDiff] + d.name;
+  document.getElementById("lvlBadge").textContent = d.name;
   var mb = document.getElementById("modeBadge");
   if (selMode === "friends") {
     mb.textContent = "Room: " + roomCode;
-    mb.className = "badge badge-friends";
+    mb.className = "meta";
   } else {
     mb.textContent = "Solo";
-    mb.className = "badge badge-solo";
+    mb.className = "meta";
   }
   showScreen("gameScreen");
 gtag('event', 'game_started', {difficulty: DIFFS[selDiff].name, mode: selMode});
@@ -909,15 +1028,15 @@ function setupQuarter() {
   var d = DIFFS[G.diff];
   qRevenue = 0;
   qCosts = 0;
-  document.getElementById("qBadge").textContent = "Q" + G.quarter + " / " + G.maxQ;
+  document.getElementById("qBadge").textContent = "Q" + G.quarter + " of " + G.maxQ;
 
   // Concept of the Quarter
   var concept = QCONCEPTS[(G.quarter - 1) % QCONCEPTS.length];
   document.getElementById("qconceptBox").innerHTML =
     "<div class=\"qconcept\">" +
-    "<div class=\"qc-hd\">Finance Concept of the Quarter</div>" +
-    "<div class=\"qc-term\">" + concept.term + "</div>" +
-    "<div class=\"qc-def\">" + concept.def + "</div>" +
+    "<div class=\"qc-hd\">Concept of the quarter</div>" +
+    "<div><div class=\"qc-term\">" + concept.term + "</div>" +
+    "<div class=\"qc-def\">" + concept.def + "</div></div>" +
     "</div>";
 
   // Draw patients
@@ -942,7 +1061,7 @@ function setupQuarter() {
   var sc = d.staffCost * G.staff;
   G.cash -= sc;
   qCosts += sc;
-  addLog("Q" + G.quarter + ": Staff cost -$" + sc.toLocaleString() + " (" + G.staff + " x $" + d.staffCost.toLocaleString() + ")");
+  addLog("Q" + G.quarter + ": Staff cost " + money(-sc) + " (" + G.staff + " × $" + d.staffCost.toLocaleString() + ")");
 
   renderAll();
 }
@@ -963,99 +1082,84 @@ function renderStats() {
   var rc = G.reputation > 60 ? "good" : G.reputation > 30 ? "warn" : "bad";
   var runway = qCosts > 0 ? Math.floor(G.cash / qCosts) : 99;
   var margin = qRevenue - qCosts;
-  var mSign = margin >= 0 ? "+" : "";
-  var mClass = margin >= 0 ? "good" : "bad";
-
-  document.getElementById("statsBar").innerHTML =
-    "<div class=\"stat s-cash\">" +
-      "<div class=\"s-lbl\">Cash Balance</div>" +
-      "<div class=\"s-val " + cc + "\">$" + G.cash.toLocaleString() + "</div>" +
-      "<div class=\"s-trend\" style=\"color:var(--dim)\">Runway ~" + runway + " qtrs</div>" +
-      "<div class=\"stat-tip\">Your total cash. Zero = clinic closes. Runway = quarters left at current burn rate.</div>" +
-    "</div>" +
-    "<div class=\"stat s-health\">" +
-      "<div class=\"s-lbl\">Community Health</div>" +
-      "<div class=\"s-val " + hc + "\">" + G.health + "/100</div>" +
-      "<div class=\"s-trend " + mClass + "\">Q margin: " + mSign + "$" + Math.abs(margin).toLocaleString() + "</div>" +
-      "<div class=\"stat-tip\">Tracks patient outcomes. Treating patients raises it. Turning patients away lowers it. Weighted 40% of composite score.</div>" +
-    "</div>" +
-    "<div class=\"stat s-staff\">" +
-      "<div class=\"s-lbl\">Staff</div>" +
-      "<div class=\"s-val\" style=\"color:var(--blue)\">" + G.staff + "</div>" +
-      "<div class=\"s-trend\" style=\"color:var(--dim)\">Fixed cost/qtr</div>" +
-      "<div class=\"stat-tip\">Each staff member costs a fixed amount per quarter regardless of patient volume. This is your minimum cash burn.</div>" +
-    "</div>" +
-    "<div class=\"stat s-rep\">" +
-      "<div class=\"s-lbl\">Reputation</div>" +
-      "<div class=\"s-val " + rc + "\">" + G.reputation + "/100</div>" +
-      "<div class=\"s-trend\" style=\"color:var(--dim)\">Affects grants</div>" +
-      "<div class=\"stat-tip\">Affects grant eligibility and quality bonuses. Falls when you turn patients away. Rises when you serve the community.</div>" +
+  function card(dot, lbl, val, sub, tip) {
+    return "<div class=\"stat\">" +
+      "<div class=\"s-lbl\">" + (dot ? "<span class=\"dot " + dot + "\"></span>" : "") + lbl + "</div>" +
+      "<div class=\"s-val\">" + val + "</div>" +
+      "<div class=\"s-trend\">" + sub + "</div>" +
+      "<div class=\"stat-tip\">" + tip + "</div>" +
     "</div>";
+  }
+  document.getElementById("statsBar").innerHTML =
+    card(cc, "Cash balance", money(G.cash), "Runway about " + runway + " quarter" + (runway !== 1 ? "s" : ""),
+      "Your total cash. Zero means the clinic closes. Runway is the quarters left at the current burn rate.") +
+    card(hc, "Community health", G.health + "/100", "Quarter margin <span class=\"mono " + sgn(margin) + "\">" + smoney(margin) + "</span>",
+      "Tracks patient outcomes. Treating patients raises it, turning patients away lowers it. Weighted 40% of the composite score.") +
+    card("", "Staff", G.staff, "Fixed cost each quarter",
+      "Each staff member costs a fixed amount per quarter regardless of patient volume. This is your minimum cash burn.") +
+    card(rc, "Reputation", G.reputation + "/100", "Affects grants",
+      "Affects grant eligibility and quality bonuses. Falls when you turn patients away, rises when you serve the community.");
 }
 
 function renderPayerBar() {
   var total = G.insT + G.medT + G.uninsT;
   var margin = qRevenue - qCosts;
-  var mSign = margin >= 0 ? "+" : "";
-  var mClass = margin >= 0 ? "pos" : "neg";
+  var head = "<div class=\"payer-bar-label\">Payer mix</div>";
+  var chip = "<div class=\"margin-chip " + sgn(margin) + "\">Q" + G.quarter + " margin " + smoney(margin) + "</div>";
   if (total === 0) {
-    document.getElementById("payerBarWrap").innerHTML =
-      "<div class=\"payer-bar-label\">Payer Mix</div>" +
-      "<div style=\"flex:1;font-size:.68rem;color:var(--dim);font-style:italic\">No patients treated yet</div>" +
-      "<div class=\"margin-chip " + mClass + "\">Q" + G.quarter + " margin: " + mSign + "$" + Math.abs(margin).toLocaleString() + "</div>";
+    document.getElementById("payerBarWrap").innerHTML = head + "<div class=\"payer-empty\">No patients treated yet</div>" + chip;
     return;
   }
   var ip = Math.round(G.insT / total * 100);
   var mp = Math.round(G.medT / total * 100);
   var up = 100 - ip - mp;
-  document.getElementById("payerBarWrap").innerHTML =
-    "<div class=\"payer-bar-label\">Payer Mix</div>" +
+  document.getElementById("payerBarWrap").innerHTML = head +
     "<div class=\"payer-bar\">" +
       "<div class=\"pb-ins\" style=\"flex:" + ip + "\"></div>" +
       "<div class=\"pb-med\" style=\"flex:" + mp + "\"></div>" +
       "<div class=\"pb-unins\" style=\"flex:" + Math.max(up,0) + "\"></div>" +
     "</div>" +
     "<div class=\"payer-legend\">" +
-      "<span class=\"pl-item\"><span class=\"pl-dot\" style=\"background:var(--mint)\"></span>Insured " + ip + "%</span>" +
-      "<span class=\"pl-item\"><span class=\"pl-dot\" style=\"background:var(--blue)\"></span>Medicaid " + mp + "%</span>" +
-      "<span class=\"pl-item\"><span class=\"pl-dot\" style=\"background:var(--coral)\"></span>Uninsured " + up + "%</span>" +
-    "</div>" +
-    "<div class=\"margin-chip " + mClass + "\">Q" + G.quarter + " margin: " + mSign + "$" + Math.abs(margin).toLocaleString() + "</div>";
+      "<span class=\"pl-item\"><span class=\"pl-dot ins\"></span>Insured <span class=\"mono\">" + ip + "%</span></span>" +
+      "<span class=\"pl-item\"><span class=\"pl-dot med\"></span>Medicaid <span class=\"mono\">" + mp + "%</span></span>" +
+      "<span class=\"pl-item\"><span class=\"pl-dot unins\"></span>Uninsured <span class=\"mono\">" + up + "%</span></span>" +
+    "</div>" + chip;
 }
+
+var INS_LABEL = {insured:"Insured", medicaid:"Medicaid", uninsured:"Uninsured"};
+var INS_DOT   = {insured:"ins", medicaid:"med", uninsured:"unins"};
 
 function renderPatients() {
   var waiting = curPatients.filter(function(p){ return p.status === "waiting"; }).length;
   document.getElementById("patientCount").textContent = waiting + " awaiting decision";
   document.getElementById("patients").innerHTML = curPatients.map(function(p, i) {
-    var tagClass = p.ins === "insured" ? "tag-ins" : p.ins === "medicaid" ? "tag-med" : "tag-unins";
     var stateClass = p.status === "treated" ? "treated" : p.status === "rejected" ? "rejected" : "";
     var r = p.reimb;
     if (evMods.medCut && p.ins === "medicaid") r = Math.round(r * evMods.medCut);
     var net = r - p.cost;
-    var netClass = net >= 0 ? "net-pos" : "net-neg";
-    var netStr = (net >= 0 ? "+" : "") + "$" + Math.abs(net).toLocaleString();
 
     var statusHtml = "";
     if (p.status === "treated") {
-      statusHtml = "<div class=\"pc-done\" style=\"color:var(--mint)\">Treated this quarter</div>";
+      statusHtml = "<div class=\"pc-done pos\">Treated this quarter</div>";
     } else if (p.status === "rejected") {
-      statusHtml = "<div class=\"pc-done\" style=\"color:var(--coral)\">Turned away</div>";
+      statusHtml = "<div class=\"pc-done neg\">Turned away</div>";
     }
     var btnsHtml = p.status === "waiting"
       ? "<div class=\"pc-btns\">" +
           "<button class=\"btn btn-sm btn-mint\" onclick=\"treat(" + i + ")\">Treat</button>" +
-          "<button class=\"btn btn-sm btn-out\" onclick=\"reject(" + i + ")\">Turn Away</button>" +
+          "<button class=\"btn btn-sm btn-out\" onclick=\"reject(" + i + ")\">Turn away</button>" +
         "</div>"
       : "";
 
     return "<div class=\"pc " + stateClass + "\">" +
-      "<div class=\"pc-name\">" + p.name + " <span class=\"tag " + tagClass + "\">" + p.ins + "</span></div>" +
+      "<div class=\"pc-head\"><span class=\"pc-name\">" + p.name + "</span>" +
+        "<span class=\"tag\"><span class=\"pl-dot " + INS_DOT[p.ins] + "\"></span>" + INS_LABEL[p.ins] + "</span></div>" +
+      "<div class=\"pc-cond\">" + p.cond + "</div>" +
       "<div class=\"pc-fin\">" +
-        "<span>" + p.cond + "</span>" +
-        "<span>Cost: $" + p.cost.toLocaleString() + "</span>" +
-        "<span>Reimb: $" + r.toLocaleString() + "</span>" +
-        "<span class=\"" + netClass + "\">Net: " + netStr + "</span>" +
-        "<span>+&nbsp;" + p.hp + " health</span>" +
+        "<span>Cost " + money(p.cost) + "</span>" +
+        "<span>Reimb " + money(r) + "</span>" +
+        "<span class=\"" + sgn(net) + "\">Net " + smoney(net) + "</span>" +
+        "<span>+" + p.hp + " health</span>" +
       "</div>" +
       statusHtml + btnsHtml +
       "</div>";
@@ -1072,23 +1176,21 @@ function renderEvent() {
       "</div>";
   } else {
     document.getElementById("event").innerHTML =
-      "<div style=\"color:var(--dim);font-size:.78rem;padding:.4rem\">No event this quarter. Enjoy the calm; it will not last.</div>";
+      "<div class=\"ev-empty\">No event this quarter. Enjoy the calm, it will not last.</div>";
   }
 }
 
 function renderDecision() {
   if (curDecision && curDecision.opts && curDecision.opts.length > 0) {
     var opts = curDecision.opts.map(function(o, i) {
-      var costStr = o.cost < 0 ? "-$" + Math.abs(o.cost).toLocaleString() : o.cost > 0 ? "+$" + o.cost.toLocaleString() : "No cost";
+      var costStr = o.cost === 0 ? "No cost" : smoney(o.cost);
       var benParts = [];
-      if (o.hp > 0)  benParts.push("+" + o.hp + " health");
-      if (o.hp < 0)  benParts.push(o.hp + " health");
-      if (o.rep > 0) benParts.push("+" + o.rep + " rep");
-      if (o.rep < 0) benParts.push(o.rep + " rep");
+      if (o.hp !== 0)  benParts.push((o.hp > 0 ? "+" : "−") + Math.abs(o.hp) + " health");
+      if (o.rep !== 0) benParts.push((o.rep > 0 ? "+" : "−") + Math.abs(o.rep) + " rep");
       return "<button class=\"dec-opt\" onclick=\"decide(" + i + ")\">" +
         "<div>" + o.t + "</div>" +
-        "<div class=\"d-cost\">" + costStr + "</div>" +
-        "<div class=\"d-ben\">" + benParts.join(" · ") + "</div>" +
+        "<div class=\"d-cost " + sgn(o.cost) + "\">" + costStr + "</div>" +
+        (benParts.length ? "<div class=\"d-ben\">" + benParts.join(" · ") + "</div>" : "") +
         "</button>";
     }).join("");
     document.getElementById("decisions").innerHTML =
@@ -1096,7 +1198,7 @@ function renderDecision() {
       "<div class=\"dec-opts\">" + opts + "</div>";
   } else {
     document.getElementById("decisions").innerHTML =
-      "<div class=\"dec-done\">Decision made this quarter.</div>";
+      "<div class=\"dec-done\">Decision made this quarter</div>";
   }
 }
 
@@ -1123,7 +1225,7 @@ function treat(i) {
   if (p.ins === "medicaid")  { G.medT++;  }
   if (p.ins === "uninsured") { G.uninsT++; G.reputation = Math.min(100, G.reputation + 2); }
   p.status = "treated";
-  addLog("Treated " + p.name + " | Cost: $" + p.cost.toLocaleString() + " | Received: $" + r.toLocaleString() + " | Net: " + (net>=0?"+":"") + "$" + net.toLocaleString());
+  addLog("Treated " + p.name + " | Cost: $" + p.cost.toLocaleString() + " | Received: $" + r.toLocaleString() + " | Net: " + smoney(net));
 
   // In-game concept tips
   if (p.ins === "uninsured") {
@@ -1146,7 +1248,7 @@ function reject(i) {
   G.health     = Math.max(0, G.health - p.hp);
   G.reputation = Math.max(0, G.reputation - 3);
   G.rejected++;
-  addLog("Turned away " + p.name + " | Health: -" + p.hp + " | Reputation: -3");
+  addLog("Turned away " + p.name + " | Health: \u2212" + p.hp + " | Reputation: \u22123");
   if (p.ins === "uninsured") {
     showCtip("Payer Mix Risk", "Why Rejection Hurts",
       "Turning away uninsured patients saves cash short-term but costs " + p.hp + " health points and 3 reputation. Lower reputation reduces grant eligibility, making it harder to fund care later.");
@@ -1200,14 +1302,15 @@ function nextQuarter() {
 
   // Dynamic headline based on what actually happened
   var hlText = buildHeadline();
-  document.getElementById("hlText").textContent = hlText;
+  document.getElementById("hlText").textContent = hlText.replace(/^"|"$/g, "");
+  document.getElementById("hlDate").textContent = "Quarter " + G.quarter + " of " + G.maxQ + " report";
 
   // Quarter stats
   document.getElementById("hlStats").innerHTML =
     "<div class=\"hl-stat\"><span>" + G.treated + "</span>treated</div>" +
     "<div class=\"hl-stat\"><span>" + G.rejected + "</span>rejected</div>" +
-    "<div class=\"hl-stat\"><span>" + mSign + "$" + Math.abs(margin).toLocaleString() + "</span>margin</div>" +
-    "<div class=\"hl-stat\"><span>$" + G.cash.toLocaleString() + "</span>cash left</div>";
+    "<div class=\"hl-stat\"><span>" + smoney(margin) + "</span>margin</div>" +
+    "<div class=\"hl-stat\"><span>" + money(G.cash) + "</span>cash left</div>";
 
   // Concept-specific insight using real game data
   var concept = QCONCEPTS[(G.quarter - 1) % QCONCEPTS.length];
@@ -1253,8 +1356,8 @@ function buildHeadline() {
 function buildConceptInsight(term, margin) {
   var total     = G.insT + G.medT + G.uninsT;
   var mSign     = margin >= 0 ? "+" : "";
-  var mStr      = mSign + "$" + Math.abs(margin).toLocaleString();
-  var cashStr   = "$" + G.cash.toLocaleString();
+  var mStr      = smoney(margin);
+  var cashStr   = money(G.cash);
   var staffCost = DIFFS[G.diff].staffCost * G.staff;
   var runway    = qCosts > 0 ? Math.floor(G.cash / qCosts) : 99;
   var evName    = curEvent ? curEvent.title : null;
@@ -1379,15 +1482,15 @@ async function endGame() {
   var composite = Math.round(finScore * 0.4 + G.health * 0.4 + G.reputation * 0.2);
   var total     = G.insT + G.medT + G.uninsT;
 
-  document.getElementById("endClinic").textContent = sanitizeName(clinicName) + " · " + DIFFS[G.diff].name + " · " + G.maxQ + " Quarters";
-  document.getElementById("esCash").textContent    = "$" + G.cash.toLocaleString();
+  document.getElementById("endClinic").textContent = sanitizeName(clinicName) + " · " + DIFFS[G.diff].name + " · " + G.maxQ + " quarters";
+  document.getElementById("esCash").textContent    = money(G.cash);
   document.getElementById("esHealth").textContent  = G.health + "/100";
   document.getElementById("esRep").textContent     = G.reputation + "/100";
   document.getElementById("esComp").textContent    = composite + "/100";
 
   var grade;
-  if (composite >= 80) grade = "Outstanding. You demonstrated that mission and margin can coexist, which isessential to community health organization.";
-  else if (composite >= 65) grade = "Good management. You kept the clinic viable while serving the community. However, here is room to optimize the balance further.";
+  if (composite >= 80) grade = "Outstanding. You demonstrated that mission and margin can coexist, which is essential for any community health organization.";
+  else if (composite >= 65) grade = "Good management. You kept the clinic viable while serving the community. There is still room to optimize the balance further.";
   else if (composite >= 45) grade = "Struggled to find balance. You leaned too far toward one objective. In healthcare finance, neither aspect can be ignored.";
   else grade = "The clinic failed its dual mission. You cannot optimize one aspect at the expense of all others and survive long-term.";
   document.getElementById("esGrade").textContent = grade;
@@ -1401,7 +1504,7 @@ async function endGame() {
   if (composite >= 80) badges.push("Mission and Margin Master");
   if (G.rejected === 0) badges.push("Open Door Policy");
   document.getElementById("achvBadges").innerHTML = badges.map(function(b){
-    return "<div class=\"achv-badge\">⭐ " + b + "</div>";
+    return "<div class=\"achv-badge\">" + ICON_AWARD + b + "</div>";
   }).join("");
 
   // Level up message removed — all difficulties available from the start
@@ -1426,7 +1529,7 @@ async function endGame() {
   if (G.cash < 8000) {
     items.push({
       concept:"Cash Runway and Reserves",
-      text:"You ended with $" + G.cash.toLocaleString() + ", which is dangerously thin. One bad event would have closed the clinic. Healthcare organizations have to maintain 60-90 days of operating expenses as a minimum reserve floor."
+      text:"You ended with " + money(G.cash) + ", which is dangerously thin. One bad event would have closed the clinic. Healthcare organizations have to maintain 60-90 days of operating expenses as a minimum reserve floor."
     });
   }
 
@@ -1469,7 +1572,7 @@ async function endGame() {
   saveLocal(entry);
   if (SUPABASE_READY) {
     var ok = await dbInsert(entry);
-    if (ok) showToast(selMode === "friends" ? "Score posted to leaderboard!" : "Score saved to global leaderboard!");
+    if (ok) showToast(selMode === "friends" ? "Score posted to your room leaderboard" : "Score saved to the global leaderboard");
   }
 gtag('event', 'game_completed', {score: composite, difficulty: DIFFS[G.diff].name, mode: selMode});  
 showScreen("endScreen");
@@ -1501,7 +1604,7 @@ function switchLbTab(tab, el) {
 }
 
 async function loadLB() {
-  document.getElementById("lbContent").innerHTML = "<div class=\"lb-msg\">Loading scores...</div>";
+  document.getElementById("lbContent").innerHTML = "<div class=\"lb-msg\">Loading scores…</div>";
   if (roomCode) {
     document.getElementById("lbt-room").style.display = "inline-block";
     var ri = document.getElementById("lbRoomInput");
@@ -1531,8 +1634,8 @@ function renderLB(rows) {
   ];
 
   if (!rows.length) {
-    document.getElementById("lbSub").textContent = "No scores yet. Play a game first!";
-    document.getElementById("lbContent").innerHTML = "<div class=\"lb-msg\">No scores yet, play a game first!</div>";
+    document.getElementById("lbSub").textContent = "No scores yet";
+    document.getElementById("lbContent").innerHTML = "<div class=\"lb-msg\">No scores yet. Play a game to post the first one.</div>";
     return;
   }
 
@@ -1549,13 +1652,13 @@ function renderLB(rows) {
     totalShown += bucket.length;
 
     html += "<div class=\"lb-section\">";
-    html += "<div class=\"lb-diff-header\" style=\"color:" + diff.color + "\">" + diff.label + "</div>";
+    html += "<div class=\"lb-diff-header\">" + diff.label + "</div>";
 
     if (!bucket.length) {
-      html += "<div class=\"lb-msg\" style=\"font-size:.78rem;padding:.6rem 0\">No scores yet for this difficulty.</div>";
+      html += "<div class=\"lb-msg\">No scores yet for this difficulty</div>";
     } else {
       html += "<table class=\"lb-table\"><thead><tr>" +
-        "<th>#</th><th>Score</th><th>Player</th><th>Clinic</th><th>Treated</th><th>Date</th>" +
+        "<th>Rank</th><th>Score</th><th>Player</th><th>Clinic</th><th>Treated</th><th>Date</th>" +
         "</tr></thead><tbody>";
 
       bucket.forEach(function(s, i) {
@@ -1565,9 +1668,9 @@ function renderLB(rows) {
           "<td class=\"" + rc2 + "\">" + (i + 1) + "</td>" +
           "<td class=\"" + rc2 + "\">" + s.score + "/100</td>" +
           "<td>" + (s.player_name || "—") + "</td>" +
-          "<td style=\"font-size:.7rem;color:var(--dim)\">" + (s.clinic_name || "—") + "</td>" +
+          "<td class=\"dim\">" + (s.clinic_name || "—") + "</td>" +
           "<td>" + (s.treated || 0) + "</td>" +
-          "<td style=\"font-size:.68rem;color:var(--dim)\">" + dt + "</td>" +
+          "<td class=\"dim\">" + dt + "</td>" +
           "</tr>";
       });
 
