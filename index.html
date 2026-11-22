@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0d1219">
 <title>Vitals & Ventures - Healthcare Finance Simulation Game</title>
-<meta name="description" content="Run a community health clinic. Make decisions about patient care, insurance reimbursement, and operating budgets. Free educational game teaching healthcare finance through simulation.">
+<meta name="description" content="Run a health clinic. Make decisions about patient care, insurance reimbursement, and operating budgets. Free educational game teaching healthcare finance through simulation.">
 <meta name="keywords" content="healthcare finance game, medical business simulation, educational finance game, health economics, community health clinic simulation">
 <meta property="og:title" content="Vitals & Ventures - Healthcare Finance Simulation">
 <meta property="og:description" content="Can you balance mission and margin? Run a community health clinic and find out.">
@@ -305,6 +305,12 @@ em{font-style:normal;color:var(--text)}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--raised-2);border:1px solid var(--line-2);border-radius:10px;padding:12px 20px;font-size:14px;color:var(--text);z-index:9999;transition:transform .3s var(--ease),opacity .3s var(--ease);white-space:nowrap;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
+/* demo nudge: one ring around the start button, then gone */
+.btn.nudge{animation:nudge 1.1s var(--ease) 2}
+@keyframes nudge{0%{box-shadow:0 0 0 0 rgba(78,204,163,.55)}100%{box-shadow:0 0 0 14px rgba(78,204,163,0)}}
+.nudge-hint{font-size:14px;color:var(--text-2);margin-top:12px;opacity:0;transform:translateY(-4px);transition:opacity .2s var(--ease),transform .2s var(--ease)}
+.nudge-hint.show{opacity:1;transform:none}
+
 /* LOAD */
 #screen1.active .hero>*{animation:rise .5s var(--ease) both}
 #screen1.active .hero>*:nth-child(2){animation-delay:.06s}
@@ -466,17 +472,18 @@ async function dbStats() {
 <section class="hero wrap">
   <div class="hero-copy">
     <p class="eyebrow">A healthcare finance simulation</p>
-    <h1>Run a community health clinic. Balance mission and margin.</h1>
+    <h1>Run a health clinic. Balance mission and margin.</h1>
     <p class="lede">Play as the clinic's director for four to eight quarters. Treat patients, pay staff, weather surprises and see the finance behind every decision.</p>
     <div class="hero-actions">
-      <button class="btn btn-mint" onclick="showScreen('screen2')">Start a clinic</button>
+      <button class="btn btn-mint" id="startCta" onclick="showScreen('screen2')">Start a clinic</button>
       <button class="btn btn-out" onclick="startTutorial()">How to play</button>
     </div>
+    <p class="nudge-hint" id="nudgeHint" aria-live="polite">That's a preview. Start a clinic to treat real patients.</p>
   </div>
 
   <div class="preview" aria-hidden="true">
     <div class="pv-top">
-      <span class="pv-name">Eastside Community Clinic</span>
+      <span class="pv-name">Sample Community Clinic</span>
       <span class="pv-meta mono">Resident · Q3 of 6</span>
     </div>
     <div class="pv-figs">
@@ -505,7 +512,7 @@ async function dbStats() {
         <div class="pc-head"><span class="pc-name">Maria G.</span><span class="tag"><span class="pl-dot ins"></span>Insured</span></div>
         <div class="pc-cond">Diabetes management</div>
         <div class="pc-fin"><span>Cost $600</span><span>Reimb $1,400</span><span class="pos">Net +$800</span><span>+3 health</span></div>
-        <div class="pc-btns"><span class="btn btn-sm btn-mint">Treat</span><span class="btn btn-sm btn-out">Turn away</span></div>
+        <div class="pc-btns"><button class="btn btn-sm btn-mint" tabindex="-1" onclick="nudgeStart()">Treat</button><button class="btn btn-sm btn-out" tabindex="-1" onclick="nudgeStart()">Turn away</button></div>
       </div>
       <div class="pc">
         <div class="pc-head"><span class="pc-name">Rosa L.</span><span class="tag"><span class="pl-dot unins"></span>Uninsured</span></div>
@@ -920,11 +927,11 @@ var TUT = [
   {title:"Your four dashboard metrics",
    body:"<div class=\"tut-hi\"> <b>Cash Balance</b> - Hits zero and the clinic closes. This is your hard constraint.<br><br> <b>Community Health</b> - Rises when you treat patients, falls when you turn them away.<br><br><b>Staff</b> - Each staff member costs a fixed amount every quarter regardless of patient volume. That is a fixed cost.<br><br> <b>Reputation</b> - Affects grant eligibility and quality bonus payments.</div>"},
   {title:"The insurance tier system",
-   body:"<p>Same patient, same treatment. Three completely different financial outcomes:</p><div class=\"tut-hi\"> <b>Insured</b> - Reimbursement exceeds your cost. Treating this patient is profitable.<br><br> <b>Medicaid</b> - Reimbursement covers about 60% of cost. You take a modest loss but serve the community.<br><br> <b>Uninsured</b> - Zero reimbursement. Full cost to you. Maximum community impact, maximum financial strain.</div><p>This is not a game abstraction. U.S. community health centers navigate this every single day.</p>"},
+   body:"<p>Same patient, same treatment, different financial outcomes:</p><div class=\"tut-hi\"> <b>Insured</b> - Reimbursement exceeds your cost. Treating this patient is profitable.<br><br> <b>Medicaid</b> - Reimbursement covers about 60% of cost. You take a modest loss but serve the community.<br><br> <b>Uninsured</b> - Zero reimbursement, and full cost to you. Maximum community impact, but also maximum financial strain.</div><p>This is not just an abstraction; community health centers deal with this every single day.</p>"},
   {title:"Events, decisions and concepts",
    body:"<p>Each quarter brings a <b>random event</b>: flu surge, grant, equipment failure, staff burnout, plus one <b>strategic decision</b>. Both require financial thinking, not just immediate reactions.</p><p>You will also see a <b>finance concept of the quarter</b> before each round, and concept tips appear as you act. These connect your decisions to financial vocabulary.</p>"},
   {title:"The composite score",
-   body:"<div class=\"tut-hi\">Composite = 40% Financial + 40% Community Health + 20% Reputation</div><p>This formula is the lesson of the game. Reject every uninsured patient? Community Health falls. Treat everyone regardless of cost? You go bankrupt.</p><p>The only method to a high score is balance. This is how every community health center in America must operate.</p>"},
+   body:"<div class=\"tut-hi\">Composite = 40% Financial + 40% Community Health + 20% Reputation</div><p>This formula is the lesson of the game. Reject every uninsured patient, and community Health falls. Treat everyone regardless of cost, and you go bankrupt.</p><p>The only method to a high score is balance.</p>"},
 ];
 var tutIdx = 0;
 
@@ -1758,6 +1765,24 @@ function exportCSV() {
 // ── CONCEPT TIP BUBBLE (disabled) ──
 function showCtip(badge, title, body) {
   // tip bubble removed
+}
+
+// ── LANDING DEMO NUDGE ──
+// The preview's Treat / Turn away buttons point the player to the real game
+function nudgeStart() {
+  var cta  = document.getElementById("startCta");
+  var hint = document.getElementById("nudgeHint");
+  var r = cta.getBoundingClientRect();
+  var inView = r.top >= 64 && r.bottom <= window.innerHeight;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!inView) cta.scrollIntoView({behavior: reduce ? "auto" : "smooth", block: "center"});
+  setTimeout(function(){
+    cta.classList.remove("nudge"); void cta.offsetWidth; cta.classList.add("nudge");
+    hint.classList.add("show");
+    cta.focus({preventScroll:true});
+  }, inView ? 0 : 450);
+  clearTimeout(nudgeStart.t);
+  nudgeStart.t = setTimeout(function(){ cta.classList.remove("nudge"); hint.classList.remove("show"); }, 4000);
 }
 
 // ── TOAST ──
